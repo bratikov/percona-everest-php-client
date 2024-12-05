@@ -51,23 +51,24 @@ Please follow the [installation procedure](#installation--usage) and then run th
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+$cnf = new \Everest\Configuration();
+$cnf->setHost('http://HOST:PORT/v1');
 
-
-
-$apiInstance = new Everest\Api\BackupStorageApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+$session = (new \Everest\Client\DefaultApi(new \GuzzleHttp\Client(), $cnf))->session(
+  (new \Everest\Model\TokenRequest())
+    ->setUsername('username')
+    ->setPassword('password')
 );
-$createBackupStorageParams = new \Everest\Model\CreateBackupStorageParams(); // \Everest\Model\CreateBackupStorageParams | The backup storage object to be created
 
-try {
-    $result = $apiInstance->createBackupStorage($createBackupStorageParams);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling BackupStorageApi->createBackupStorage: ', $e->getMessage(), PHP_EOL;
-}
-
+$client = new \GuzzleHttp\Client([
+  'timeout' => 1,
+  'verify' => false,
+  'headers' => [
+    'Authorization' => 'Bearer '.$session->getToken(),
+  ]
+]);
+$version = (new \Everest\Client\DefaultApi($client, $cnf))->versionInfo();
+var_dump($version->getProjectName());
 ```
 
 ## API Endpoints
