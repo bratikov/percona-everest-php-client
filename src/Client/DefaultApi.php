@@ -43,6 +43,9 @@ class DefaultApi
         'listNamespaces' => [
             'application/json',
         ],
+        'session' => [
+            'application/json',
+        ],
         'versionInfo' => [
             'application/json',
         ],
@@ -337,6 +340,335 @@ class DefaultApi
 
         return new Request(
             'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * session: Method issues a new JWT token for logging in from the Everest API
+     *
+     * @param  \Everest\Model\TokenRequest $tokenRequest User credentials (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['session'] to see the possible values for this operation
+     *
+     * @throws ApiException on non-2xx response
+     * @throws GuzzleException
+     * @throws \InvalidArgumentException
+     *
+     * @return \Everest\Model\Token|\Everest\Model\Error|\Everest\Model\Error
+     */
+    public function session(
+        mixed $tokenRequest,
+        string $contentType = self::contentTypes['session'][0],
+    ): mixed {
+        list($response) = $this->sessionWithHttpInfo($tokenRequest, $contentType);
+
+        return $response;
+    }
+
+    /**
+     * sessionWithHttpInfo: Method issues a new JWT token for logging in from the Everest API
+     *
+     * @param  \Everest\Model\TokenRequest $tokenRequest User credentials (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['session'] to see the possible values for this operation
+     *
+     * @throws ApiException on non-2xx response
+     * @throws GuzzleException
+     * @throws \InvalidArgumentException
+     *
+     * @return array{
+     *     \Everest\Model\Token|\Everest\Model\Error|\Everest\Model\Error,
+     *     int,
+     *     list<string>,
+     * } Array of response body, status, and response headers
+     */
+    public function sessionWithHttpInfo(
+        mixed $tokenRequest,
+        string $contentType = self::contentTypes['session'][0],
+    ): array {
+        $request = $this->sessionRequest($tokenRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            switch($statusCode) {
+                case 200:
+                    if ('\Everest\Model\Token' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ('\Everest\Model\Token' !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Everest\Model\Token', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 400:
+                    if ('\Everest\Model\Error' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ('\Everest\Model\Error' !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Everest\Model\Error', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 500:
+                    if ('\Everest\Model\Error' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ('\Everest\Model\Error' !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Everest\Model\Error', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\Everest\Model\Token';
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Everest\Model\Token',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Everest\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Everest\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * sessionAsync: Method issues a new JWT token for logging in from the Everest API
+     *
+     * @param  \Everest\Model\TokenRequest $tokenRequest User credentials (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['session'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function sessionAsync(
+        mixed $tokenRequest,
+        string $contentType = self::contentTypes['session'][0],
+    ): PromiseInterface {
+        return $this->sessionAsyncWithHttpInfo($tokenRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * sessionAsyncWithHttpInfo: Method issues a new JWT token for logging in from the Everest API
+     *
+     * @param  \Everest\Model\TokenRequest $tokenRequest User credentials (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['session'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function sessionAsyncWithHttpInfo(
+        mixed $tokenRequest,
+        string $contentType = self::contentTypes['session'][0],
+    ): PromiseInterface {
+        $returnType = '\Everest\Model\Token';
+        $request = $this->sessionRequest($tokenRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'session'
+     *
+     * @param  \Everest\Model\TokenRequest $tokenRequest User credentials (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['session'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function sessionRequest(
+        mixed $tokenRequest,
+        string $contentType = self::contentTypes['session'][0],
+    ): Request {
+        // verify the required parameter 'tokenRequest' is set
+        if ($tokenRequest === null || (is_array($tokenRequest) && count($tokenRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $tokenRequest when calling session'
+            );
+        }
+
+        $resourcePath = '/session';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($tokenRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($tokenRequest));
+            } else {
+                $httpBody = $tokenRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+
+        return new Request(
+            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

@@ -27,7 +27,7 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
     }
   ],
   "require": {
-    "bratikov/percona-everest-php-client": "*@dev"
+    "percona/everest": "*@dev"
   }
 }
 ```
@@ -101,6 +101,7 @@ Class | Method | HTTP request | Description
 *DatabaseEngineApi* | [**listDatabaseEngines**](docs/Api/DatabaseEngineApi.md#listdatabaseengines) | **GET** /namespaces/{namespace}/database-engines | List of the available database engines
 *DatabaseEngineApi* | [**updateDatabaseEngine**](docs/Api/DatabaseEngineApi.md#updatedatabaseengine) | **PUT** /namespaces/{namespace}/database-engines/{name} | Update the specified database engine
 *DefaultApi* | [**listNamespaces**](docs/Api/DefaultApi.md#listnamespaces) | **GET** /namespaces | Get all namespaces managed by Everest
+*DefaultApi* | [**session**](docs/Api/DefaultApi.md#session) | **POST** /session | Method issues a new JWT token for logging in from the Everest API
 *DefaultApi* | [**versionInfo**](docs/Api/DefaultApi.md#versioninfo) | **GET** /version | Get Everest API Server version info
 *K8sApi* | [**getKubernetesClusterInfo**](docs/Api/K8sApi.md#getkubernetesclusterinfo) | **GET** /cluster-info | Get the cluster type and storage classes of a kubernetes cluster
 *K8sApi* | [**getKubernetesClusterResources**](docs/Api/K8sApi.md#getkubernetesclusterresources) | **GET** /resources | Get the capacity and available resources of a kubernetes cluster
@@ -176,6 +177,8 @@ Class | Method | HTTP request | Description
 - [MonitoringInstancePMMPmm](docs/Model/MonitoringInstancePMMPmm.md)
 - [MonitoringInstanceUpdateParams](docs/Model/MonitoringInstanceUpdateParams.md)
 - [SizeLimit](docs/Model/SizeLimit.md)
+- [Token](docs/Model/Token.md)
+- [TokenRequest](docs/Model/TokenRequest.md)
 - [UpdateBackupStorageParams](docs/Model/UpdateBackupStorageParams.md)
 - [Version](docs/Model/Version.md)
 
