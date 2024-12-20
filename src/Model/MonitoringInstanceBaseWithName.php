@@ -47,6 +47,7 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => 'string[]',
         'verifyTLS' => 'bool',
         'name' => 'string',
+        'namespace' => 'string',
     ];
 
     /**
@@ -60,6 +61,7 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => null,
         'verifyTLS' => null,
         'name' => null,
+        'namespace' => null,
     ];
 
     /**
@@ -73,6 +75,7 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => false,
         'verifyTLS' => false,
         'name' => false,
+        'namespace' => false,
     ];
 
     /**
@@ -160,6 +163,7 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => 'allowedNamespaces',
         'verifyTLS' => 'verifyTLS',
         'name' => 'name',
+        'namespace' => 'namespace',
     ];
 
     /**
@@ -173,6 +177,7 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => 'setAllowedNamespaces',
         'verifyTLS' => 'setVerifyTLS',
         'name' => 'setName',
+        'namespace' => 'setNamespace',
     ];
 
     /**
@@ -186,6 +191,7 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => 'getAllowedNamespaces',
         'verifyTLS' => 'getVerifyTLS',
         'name' => 'getName',
+        'namespace' => 'getNamespace',
     ];
 
     /**
@@ -262,6 +268,7 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
         $this->setIfExists('allowedNamespaces', $data ?? [], null);
         $this->setIfExists('verifyTLS', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('namespace', $data ?? [], null);
     }
 
     /**
@@ -388,6 +395,8 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
      * Gets allowedNamespaces
      *
      * @return null|string[]
+     *
+     * @deprecated
      */
     public function getAllowedNamespaces(): mixed
     {
@@ -398,6 +407,8 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
      * Sets allowedNamespaces
      *
      * @param null|string[] $allowedNamespaces List of namespaces allowed to use this monitoring instance
+     *
+     * @deprecated
      */
     public function setAllowedNamespaces(mixed $allowedNamespaces): static
     {
@@ -458,6 +469,31 @@ class MonitoringInstanceBaseWithName implements ModelInterface, \ArrayAccess, \J
             throw new \InvalidArgumentException('invalid length for $name when calling MonitoringInstanceBaseWithName., must be bigger than or equal to 1.');
         }
         $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets namespace
+     *
+     * @return null|string
+     */
+    public function getNamespace(): mixed
+    {
+        return $this->container['namespace'];
+    }
+
+    /**
+     * Sets namespace
+     *
+     * @param null|string $namespace namespace
+     */
+    public function setNamespace(mixed $namespace): static
+    {
+        if (is_null($namespace)) {
+            throw new \InvalidArgumentException('non-nullable namespace cannot be null');
+        }
+        $this->container['namespace'] = $namespace;
 
         return $this;
     }

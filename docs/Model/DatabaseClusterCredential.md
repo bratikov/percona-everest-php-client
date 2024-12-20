@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**connectionUrl** | **string** |  | [optional]
 **username** | **string** |  | [optional]
 **password** | **string** |  | [optional]
 

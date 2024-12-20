@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **created** | **\DateTime** | Created is the timestamp of the upstream backup&#39;s creation. | [optional]
 **destination** | **string** | Destination is the full path to the backup. | [optional]
 **gaps** | **bool** | Gaps identifies if there are gaps detected in the PITR logs |
+**latestRestorableTime** | **\DateTime** | LatestRestorableTime is the latest time that can be used for PITR restore | [optional]
 **state** | **string** | State is the DatabaseBackup state. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

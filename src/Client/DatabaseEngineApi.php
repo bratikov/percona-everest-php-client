@@ -88,7 +88,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * getDatabaseEngine: Get the specified database engine
+     * getDatabaseEngine: Get database engine
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database engine (required)
@@ -111,7 +111,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * getDatabaseEngineWithHttpInfo: Get the specified database engine
+     * getDatabaseEngineWithHttpInfo: Get database engine
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database engine (required)
@@ -264,7 +264,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * getDatabaseEngineAsync: Get the specified database engine
+     * getDatabaseEngineAsync: Get database engine
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database engine (required)
@@ -286,7 +286,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * getDatabaseEngineAsyncWithHttpInfo: Get the specified database engine
+     * getDatabaseEngineAsyncWithHttpInfo: Get database engine
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database engine (required)
@@ -422,6 +422,11 @@ class DatabaseEngineApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -445,7 +450,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * listDatabaseEngines: List of the available database engines
+     * listDatabaseEngines: List database engines
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDatabaseEngines'] to see the possible values for this operation
@@ -466,7 +471,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * listDatabaseEnginesWithHttpInfo: List of the available database engines
+     * listDatabaseEnginesWithHttpInfo: List database engines
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDatabaseEngines'] to see the possible values for this operation
@@ -617,7 +622,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * listDatabaseEnginesAsync: List of the available database engines
+     * listDatabaseEnginesAsync: List database engines
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDatabaseEngines'] to see the possible values for this operation
@@ -637,7 +642,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * listDatabaseEnginesAsyncWithHttpInfo: List of the available database engines
+     * listDatabaseEnginesAsyncWithHttpInfo: List database engines
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDatabaseEngines'] to see the possible values for this operation
@@ -753,6 +758,11 @@ class DatabaseEngineApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -776,7 +786,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * updateDatabaseEngine: Update the specified database engine
+     * updateDatabaseEngine: Update database engine
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database engine (required)
@@ -801,7 +811,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * updateDatabaseEngineWithHttpInfo: Update the specified database engine
+     * updateDatabaseEngineWithHttpInfo: Update database engine
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database engine (required)
@@ -956,7 +966,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * updateDatabaseEngineAsync: Update the specified database engine
+     * updateDatabaseEngineAsync: Update database engine
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database engine (required)
@@ -980,7 +990,7 @@ class DatabaseEngineApi
     }
 
     /**
-     * updateDatabaseEngineAsyncWithHttpInfo: Update the specified database engine
+     * updateDatabaseEngineAsyncWithHttpInfo: Update database engine
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database engine (required)
@@ -1132,6 +1142,11 @@ class DatabaseEngineApi
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
             }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
 
         $defaultHeaders = [];

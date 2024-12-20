@@ -27,7 +27,7 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
     }
   ],
   "require": {
-    "percona/everest": "*@dev"
+    "percona/everest": "latest"
   }
 }
 ```
@@ -51,24 +51,23 @@ Please follow the [installation procedure](#installation--usage) and then run th
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$cnf = new \Everest\Configuration();
-$cnf->setHost('http://HOST:PORT/v1');
 
-$session = (new \Everest\Client\DefaultApi(new \GuzzleHttp\Client(), $cnf))->session(
-  (new \Everest\Model\TokenRequest())
-    ->setUsername('username')
-    ->setPassword('password')
+
+
+$apiInstance = new Everest\Api\AuthenticationAuthorizationApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client()
 );
+$userCredentials = new \Everest\Model\UserCredentials(); // \Everest\Model\UserCredentials | The user credentials
 
-$client = new \GuzzleHttp\Client([
-  'timeout' => 1,
-  'verify' => false,
-  'headers' => [
-    'Authorization' => 'Bearer '.$session->getToken(),
-  ]
-]);
-$version = (new \Everest\Client\DefaultApi($client, $cnf))->versionInfo();
-var_dump($version->getProjectName());
+try {
+    $result = $apiInstance->createSession($userCredentials);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AuthenticationAuthorizationApi->createSession: ', $e->getMessage(), PHP_EOL;
+}
+
 ```
 
 ## API Endpoints
@@ -77,51 +76,58 @@ All URIs are relative to */v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*BackupStorageApi* | [**createBackupStorage**](docs/Api/BackupStorageApi.md#createbackupstorage) | **POST** /backup-storages | Create a new backup storage object
-*BackupStorageApi* | [**deleteBackupStorage**](docs/Api/BackupStorageApi.md#deletebackupstorage) | **DELETE** /backup-storages/{name} | Delete the specified backup storage
-*BackupStorageApi* | [**getBackupStorage**](docs/Api/BackupStorageApi.md#getbackupstorage) | **GET** /backup-storages/{name} | Get the specified backup storage
-*BackupStorageApi* | [**listBackupStorages**](docs/Api/BackupStorageApi.md#listbackupstorages) | **GET** /backup-storages | List of the created backup storages
-*BackupStorageApi* | [**updateBackupStorage**](docs/Api/BackupStorageApi.md#updatebackupstorage) | **PATCH** /backup-storages/{name} | Partial update of the specified backup storage
-*DatabaseClusterApi* | [**createDatabaseCluster**](docs/Api/DatabaseClusterApi.md#createdatabasecluster) | **POST** /namespaces/{namespace}/database-clusters | Create a database cluster
-*DatabaseClusterApi* | [**deleteDatabaseCluster**](docs/Api/DatabaseClusterApi.md#deletedatabasecluster) | **DELETE** /namespaces/{namespace}/database-clusters/{name} | Delete the specified database cluster
-*DatabaseClusterApi* | [**getDatabaseCluster**](docs/Api/DatabaseClusterApi.md#getdatabasecluster) | **GET** /namespaces/{namespace}/database-clusters/{name} | Get the specified database cluster
-*DatabaseClusterApi* | [**getDatabaseClusterCredentials**](docs/Api/DatabaseClusterApi.md#getdatabaseclustercredentials) | **GET** /namespaces/{namespace}/database-clusters/{name}/credentials | Get the specified database cluster credentials
-*DatabaseClusterApi* | [**getDatabaseClusterPitr**](docs/Api/DatabaseClusterApi.md#getdatabaseclusterpitr) | **GET** /namespaces/{namespace}/database-clusters/{name}/pitr | Get the Point-in-Time related data for the specified database cluster
-*DatabaseClusterApi* | [**listDatabaseClusters**](docs/Api/DatabaseClusterApi.md#listdatabaseclusters) | **GET** /namespaces/{namespace}/database-clusters | List of the created database clusters
-*DatabaseClusterApi* | [**updateDatabaseCluster**](docs/Api/DatabaseClusterApi.md#updatedatabasecluster) | **PUT** /namespaces/{namespace}/database-clusters/{name} | Replace the specified database cluster
-*DatabaseClusterBackupApi* | [**createDatabaseClusterBackup**](docs/Api/DatabaseClusterBackupApi.md#createdatabaseclusterbackup) | **POST** /namespaces/{namespace}/database-cluster-backups | Create a database cluster backup
-*DatabaseClusterBackupApi* | [**deleteDatabaseClusterBackup**](docs/Api/DatabaseClusterBackupApi.md#deletedatabaseclusterbackup) | **DELETE** /namespaces/{namespace}/database-cluster-backups/{name} | Delete the specified cluster backup
-*DatabaseClusterBackupApi* | [**getDatabaseClusterBackup**](docs/Api/DatabaseClusterBackupApi.md#getdatabaseclusterbackup) | **GET** /namespaces/{namespace}/database-cluster-backups/{name} | Returns the specified cluster backup
-*DatabaseClusterBackupApi* | [**listDatabaseClusterBackups**](docs/Api/DatabaseClusterBackupApi.md#listdatabaseclusterbackups) | **GET** /namespaces/{namespace}/database-clusters/{name}/backups | List of the created database cluster backups
-*DatabaseClusterRestoreApi* | [**createDatabaseClusterRestore**](docs/Api/DatabaseClusterRestoreApi.md#createdatabaseclusterrestore) | **POST** /namespaces/{namespace}/database-cluster-restores | Create a database cluster restore
-*DatabaseClusterRestoreApi* | [**deleteDatabaseClusterRestore**](docs/Api/DatabaseClusterRestoreApi.md#deletedatabaseclusterrestore) | **DELETE** /namespaces/{namespace}/database-cluster-restores/{name} | Delete the specified cluster restore
-*DatabaseClusterRestoreApi* | [**getDatabaseClusterRestore**](docs/Api/DatabaseClusterRestoreApi.md#getdatabaseclusterrestore) | **GET** /namespaces/{namespace}/database-cluster-restores/{name} | Returns the specified cluster restore
-*DatabaseClusterRestoreApi* | [**listDatabaseClusterRestores**](docs/Api/DatabaseClusterRestoreApi.md#listdatabaseclusterrestores) | **GET** /namespaces/{namespace}/database-clusters/{name}/restores | List of the created database cluster restores
-*DatabaseClusterRestoreApi* | [**updateDatabaseClusterRestore**](docs/Api/DatabaseClusterRestoreApi.md#updatedatabaseclusterrestore) | **PUT** /namespaces/{namespace}/database-cluster-restores/{name} | Replace the specified cluster restore
-*DatabaseEngineApi* | [**getDatabaseEngine**](docs/Api/DatabaseEngineApi.md#getdatabaseengine) | **GET** /namespaces/{namespace}/database-engines/{name} | Get the specified database engine
-*DatabaseEngineApi* | [**listDatabaseEngines**](docs/Api/DatabaseEngineApi.md#listdatabaseengines) | **GET** /namespaces/{namespace}/database-engines | List of the available database engines
-*DatabaseEngineApi* | [**updateDatabaseEngine**](docs/Api/DatabaseEngineApi.md#updatedatabaseengine) | **PUT** /namespaces/{namespace}/database-engines/{name} | Update the specified database engine
-*DefaultApi* | [**listNamespaces**](docs/Api/DefaultApi.md#listnamespaces) | **GET** /namespaces | Get all namespaces managed by Everest
-*DefaultApi* | [**session**](docs/Api/DefaultApi.md#session) | **POST** /session | Method issues a new JWT token for logging in from the Everest API
-*DefaultApi* | [**versionInfo**](docs/Api/DefaultApi.md#versioninfo) | **GET** /version | Get Everest API Server version info
-*K8sApi* | [**getKubernetesClusterInfo**](docs/Api/K8sApi.md#getkubernetesclusterinfo) | **GET** /cluster-info | Get the cluster type and storage classes of a kubernetes cluster
-*K8sApi* | [**getKubernetesClusterResources**](docs/Api/K8sApi.md#getkubernetesclusterresources) | **GET** /resources | Get the capacity and available resources of a kubernetes cluster
-*MonitoringInstancesApi* | [**createMonitoringInstance**](docs/Api/MonitoringInstancesApi.md#createmonitoringinstance) | **POST** /monitoring-instances | Create a new monitoring instance object
-*MonitoringInstancesApi* | [**deleteMonitoringInstance**](docs/Api/MonitoringInstancesApi.md#deletemonitoringinstance) | **DELETE** /monitoring-instances/{name} | Delete the specified Monitoring instance
-*MonitoringInstancesApi* | [**getMonitoringInstance**](docs/Api/MonitoringInstancesApi.md#getmonitoringinstance) | **GET** /monitoring-instances/{name} | Get the specified monitoring instance
-*MonitoringInstancesApi* | [**listMonitoringInstances**](docs/Api/MonitoringInstancesApi.md#listmonitoringinstances) | **GET** /monitoring-instances | List of the created monitoring instances
-*MonitoringInstancesApi* | [**updateMonitoringInstance**](docs/Api/MonitoringInstancesApi.md#updatemonitoringinstance) | **PATCH** /monitoring-instances/{name} | Update the specified Monitoring instance
-*UpgradeDatabaseEngineOperatorApi* | [**upgradeDatabaseEngineOperator**](docs/Api/UpgradeDatabaseEngineOperatorApi.md#upgradedatabaseengineoperator) | **PUT** /namespaces/{namespace}/database-engines/{name}/operator-version | Update the specified database engine
+*AuthenticationAuthorizationApi* | [**createSession**](docs/Api/AuthenticationAuthorizationApi.md#createsession) | **POST** /session | Everest UI Login
+*AuthenticationAuthorizationApi* | [**getUserPermissions**](docs/Api/AuthenticationAuthorizationApi.md#getuserpermissions) | **GET** /permissions | Get user permissions
+*BackupApi* | [**createDatabaseClusterBackup**](docs/Api/BackupApi.md#createdatabaseclusterbackup) | **POST** /namespaces/{namespace}/database-cluster-backups | Create database cluster backup
+*BackupApi* | [**deleteDatabaseClusterBackup**](docs/Api/BackupApi.md#deletedatabaseclusterbackup) | **DELETE** /namespaces/{namespace}/database-cluster-backups/{name} | Delete database cluster backup
+*BackupApi* | [**getDatabaseClusterBackup**](docs/Api/BackupApi.md#getdatabaseclusterbackup) | **GET** /namespaces/{namespace}/database-cluster-backups/{name} | Get database cluster backup
+*BackupApi* | [**listDatabaseClusterBackups**](docs/Api/BackupApi.md#listdatabaseclusterbackups) | **GET** /namespaces/{namespace}/database-clusters/{cluster-name}/backups | List database cluster backups
+*BackupStorageApi* | [**createBackupStorage**](docs/Api/BackupStorageApi.md#createbackupstorage) | **POST** /namespaces/{namespace}/backup-storages | Create backup storage
+*BackupStorageApi* | [**deleteBackupStorage**](docs/Api/BackupStorageApi.md#deletebackupstorage) | **DELETE** /namespaces/{namespace}/backup-storages/{name} | Delete backup storage
+*BackupStorageApi* | [**getBackupStorage**](docs/Api/BackupStorageApi.md#getbackupstorage) | **GET** /namespaces/{namespace}/backup-storages/{name} | Get backup storage
+*BackupStorageApi* | [**listBackupStorages**](docs/Api/BackupStorageApi.md#listbackupstorages) | **GET** /namespaces/{namespace}/backup-storages | List backup storages
+*BackupStorageApi* | [**updateBackupStorage**](docs/Api/BackupStorageApi.md#updatebackupstorage) | **PATCH** /namespaces/{namespace}/backup-storages/{name} | Update backup storage
+*DatabaseClusterApi* | [**createDatabaseCluster**](docs/Api/DatabaseClusterApi.md#createdatabasecluster) | **POST** /namespaces/{namespace}/database-clusters | Create database cluster
+*DatabaseClusterApi* | [**deleteDatabaseCluster**](docs/Api/DatabaseClusterApi.md#deletedatabasecluster) | **DELETE** /namespaces/{namespace}/database-clusters/{name} | Delete database cluster
+*DatabaseClusterApi* | [**getDatabaseCluster**](docs/Api/DatabaseClusterApi.md#getdatabasecluster) | **GET** /namespaces/{namespace}/database-clusters/{name} | Get database cluster
+*DatabaseClusterApi* | [**getDatabaseClusterComponents**](docs/Api/DatabaseClusterApi.md#getdatabaseclustercomponents) | **GET** /namespaces/{namespace}/database-clusters/{name}/components | Get database cluster components
+*DatabaseClusterApi* | [**getDatabaseClusterCredentials**](docs/Api/DatabaseClusterApi.md#getdatabaseclustercredentials) | **GET** /namespaces/{namespace}/database-clusters/{name}/credentials | Get database cluster credentials
+*DatabaseClusterApi* | [**getDatabaseClusterPitr**](docs/Api/DatabaseClusterApi.md#getdatabaseclusterpitr) | **GET** /namespaces/{namespace}/database-clusters/{name}/pitr | Get the Point-in-Time recovery info
+*DatabaseClusterApi* | [**listDatabaseClusters**](docs/Api/DatabaseClusterApi.md#listdatabaseclusters) | **GET** /namespaces/{namespace}/database-clusters | List database clusters
+*DatabaseClusterApi* | [**updateDatabaseCluster**](docs/Api/DatabaseClusterApi.md#updatedatabasecluster) | **PUT** /namespaces/{namespace}/database-clusters/{name} | Update database cluster
+*DatabaseEngineApi* | [**getDatabaseEngine**](docs/Api/DatabaseEngineApi.md#getdatabaseengine) | **GET** /namespaces/{namespace}/database-engines/{name} | Get database engine
+*DatabaseEngineApi* | [**listDatabaseEngines**](docs/Api/DatabaseEngineApi.md#listdatabaseengines) | **GET** /namespaces/{namespace}/database-engines | List database engines
+*DatabaseEngineApi* | [**updateDatabaseEngine**](docs/Api/DatabaseEngineApi.md#updatedatabaseengine) | **PUT** /namespaces/{namespace}/database-engines/{name} | Update database engine
+*GeneralInfoApi* | [**getSettings**](docs/Api/GeneralInfoApi.md#getsettings) | **GET** /settings | Settings
+*GeneralInfoApi* | [**listNamespaces**](docs/Api/GeneralInfoApi.md#listnamespaces) | **GET** /namespaces | Managed namespaces
+*GeneralInfoApi* | [**versionInfo**](docs/Api/GeneralInfoApi.md#versioninfo) | **GET** /version | Version
+*KubernetesApi* | [**getKubernetesClusterInfo**](docs/Api/KubernetesApi.md#getkubernetesclusterinfo) | **GET** /cluster-info | Cluster info
+*KubernetesApi* | [**getKubernetesClusterResources**](docs/Api/KubernetesApi.md#getkubernetesclusterresources) | **GET** /resources | Cluster resources
+*MonitoringApi* | [**createMonitoringInstance**](docs/Api/MonitoringApi.md#createmonitoringinstance) | **POST** /namespaces/{namespace}/monitoring-instances | Create monitoring instance
+*MonitoringApi* | [**deleteMonitoringInstance**](docs/Api/MonitoringApi.md#deletemonitoringinstance) | **DELETE** /namespaces/{namespace}/monitoring-instances/{name} | Delete monitoring instnace
+*MonitoringApi* | [**getMonitoringInstance**](docs/Api/MonitoringApi.md#getmonitoringinstance) | **GET** /namespaces/{namespace}/monitoring-instances/{name} | Get monitoring instance
+*MonitoringApi* | [**listMonitoringInstances**](docs/Api/MonitoringApi.md#listmonitoringinstances) | **GET** /namespaces/{namespace}/monitoring-instances | List monitoring instances
+*MonitoringApi* | [**updateMonitoringInstance**](docs/Api/MonitoringApi.md#updatemonitoringinstance) | **PATCH** /namespaces/{namespace}/monitoring-instances/{name} | Update monitoring instance
+*OperatorsApi* | [**approveUpgradePlan**](docs/Api/OperatorsApi.md#approveupgradeplan) | **POST** /namespaces/{namespace}/database-engines/upgrade-plan/approval | Upgrade database engine operators
+*OperatorsApi* | [**getUpgradePlan**](docs/Api/OperatorsApi.md#getupgradeplan) | **GET** /namespaces/{namespace}/database-engines/upgrade-plan | Get upgrade plan
+*RestoreApi* | [**createDatabaseClusterRestore**](docs/Api/RestoreApi.md#createdatabaseclusterrestore) | **POST** /namespaces/{namespace}/database-cluster-restores | Create database cluster restore
+*RestoreApi* | [**deleteDatabaseClusterRestore**](docs/Api/RestoreApi.md#deletedatabaseclusterrestore) | **DELETE** /namespaces/{namespace}/database-cluster-restores/{name} | Delete database cluster restore
+*RestoreApi* | [**getDatabaseClusterRestore**](docs/Api/RestoreApi.md#getdatabaseclusterrestore) | **GET** /namespaces/{namespace}/database-cluster-restores/{name} | Get database cluster restore
+*RestoreApi* | [**listDatabaseClusterRestores**](docs/Api/RestoreApi.md#listdatabaseclusterrestores) | **GET** /namespaces/{namespace}/database-clusters/{cluster-name}/restores | List database cluster restores
+*RestoreApi* | [**updateDatabaseClusterRestore**](docs/Api/RestoreApi.md#updatedatabaseclusterrestore) | **PUT** /namespaces/{namespace}/database-cluster-restores/{name} | Update database cluster restore
 
 ## Models
 
 - [BackupStorage](docs/Model/BackupStorage.md)
 - [CreateBackupStorageParams](docs/Model/CreateBackupStorageParams.md)
+- [CreateSession200Response](docs/Model/CreateSession200Response.md)
 - [DatabaseCluster](docs/Model/DatabaseCluster.md)
 - [DatabaseClusterBackup](docs/Model/DatabaseClusterBackup.md)
 - [DatabaseClusterBackupList](docs/Model/DatabaseClusterBackupList.md)
 - [DatabaseClusterBackupSpec](docs/Model/DatabaseClusterBackupSpec.md)
 - [DatabaseClusterBackupStatus](docs/Model/DatabaseClusterBackupStatus.md)
+- [DatabaseClusterComponentContainer](docs/Model/DatabaseClusterComponentContainer.md)
+- [DatabaseClusterComponentsInner](docs/Model/DatabaseClusterComponentsInner.md)
 - [DatabaseClusterCredential](docs/Model/DatabaseClusterCredential.md)
 - [DatabaseClusterList](docs/Model/DatabaseClusterList.md)
 - [DatabaseClusterPitr](docs/Model/DatabaseClusterPitr.md)
@@ -129,6 +135,7 @@ Class | Method | HTTP request | Description
 - [DatabaseClusterRestoreList](docs/Model/DatabaseClusterRestoreList.md)
 - [DatabaseClusterRestoreSpec](docs/Model/DatabaseClusterRestoreSpec.md)
 - [DatabaseClusterRestoreSpecDataSource](docs/Model/DatabaseClusterRestoreSpecDataSource.md)
+- [DatabaseClusterRestoreSpecDataSourceBackupSource](docs/Model/DatabaseClusterRestoreSpecDataSourceBackupSource.md)
 - [DatabaseClusterRestoreStatus](docs/Model/DatabaseClusterRestoreStatus.md)
 - [DatabaseClusterSpec](docs/Model/DatabaseClusterSpec.md)
 - [DatabaseClusterSpecBackup](docs/Model/DatabaseClusterSpecBackup.md)
@@ -138,6 +145,21 @@ Class | Method | HTTP request | Description
 - [DatabaseClusterSpecDataSourceBackupSource](docs/Model/DatabaseClusterSpecDataSourceBackupSource.md)
 - [DatabaseClusterSpecDataSourcePitr](docs/Model/DatabaseClusterSpecDataSourcePitr.md)
 - [DatabaseClusterSpecEngine](docs/Model/DatabaseClusterSpecEngine.md)
+- [DatabaseClusterSpecEngineAffinity](docs/Model/DatabaseClusterSpecEngineAffinity.md)
+- [DatabaseClusterSpecEngineAffinityNodeAffinity](docs/Model/DatabaseClusterSpecEngineAffinityNodeAffinity.md)
+- [DatabaseClusterSpecEngineAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner](docs/Model/DatabaseClusterSpecEngineAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner.md)
+- [DatabaseClusterSpecEngineAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference](docs/Model/DatabaseClusterSpecEngineAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference.md)
+- [DatabaseClusterSpecEngineAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner](docs/Model/DatabaseClusterSpecEngineAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner.md)
+- [DatabaseClusterSpecEngineAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution](docs/Model/DatabaseClusterSpecEngineAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution.md)
+- [DatabaseClusterSpecEngineAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsInner](docs/Model/DatabaseClusterSpecEngineAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsInner.md)
+- [DatabaseClusterSpecEngineAffinityPodAffinity](docs/Model/DatabaseClusterSpecEngineAffinityPodAffinity.md)
+- [DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner](docs/Model/DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner.md)
+- [DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm](docs/Model/DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm.md)
+- [DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector](docs/Model/DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector.md)
+- [DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelectorMatchExpressionsInner](docs/Model/DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelectorMatchExpressionsInner.md)
+- [DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermNamespaceSelector](docs/Model/DatabaseClusterSpecEngineAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermNamespaceSelector.md)
+- [DatabaseClusterSpecEngineAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionInner](docs/Model/DatabaseClusterSpecEngineAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionInner.md)
+- [DatabaseClusterSpecEngineAffinityPodAntiAffinity](docs/Model/DatabaseClusterSpecEngineAffinityPodAntiAffinity.md)
 - [DatabaseClusterSpecEngineResources](docs/Model/DatabaseClusterSpecEngineResources.md)
 - [DatabaseClusterSpecEngineResourcesCpu](docs/Model/DatabaseClusterSpecEngineResourcesCpu.md)
 - [DatabaseClusterSpecEngineResourcesMemory](docs/Model/DatabaseClusterSpecEngineResourcesMemory.md)
@@ -150,6 +172,8 @@ Class | Method | HTTP request | Description
 - [DatabaseClusterSpecProxy](docs/Model/DatabaseClusterSpecProxy.md)
 - [DatabaseClusterSpecProxyExpose](docs/Model/DatabaseClusterSpecProxyExpose.md)
 - [DatabaseClusterSpecProxyResources](docs/Model/DatabaseClusterSpecProxyResources.md)
+- [DatabaseClusterSpecSharding](docs/Model/DatabaseClusterSpecSharding.md)
+- [DatabaseClusterSpecShardingConfigServer](docs/Model/DatabaseClusterSpecShardingConfigServer.md)
 - [DatabaseClusterStatus](docs/Model/DatabaseClusterStatus.md)
 - [DatabaseEngine](docs/Model/DatabaseEngine.md)
 - [DatabaseEngineList](docs/Model/DatabaseEngineList.md)
@@ -177,14 +201,27 @@ Class | Method | HTTP request | Description
 - [MonitoringInstancePMM](docs/Model/MonitoringInstancePMM.md)
 - [MonitoringInstancePMMPmm](docs/Model/MonitoringInstancePMMPmm.md)
 - [MonitoringInstanceUpdateParams](docs/Model/MonitoringInstanceUpdateParams.md)
+- [OIDCConfig](docs/Model/OIDCConfig.md)
+- [OperatorUpgradePreflight](docs/Model/OperatorUpgradePreflight.md)
+- [OperatorUpgradePreflightForDatabase](docs/Model/OperatorUpgradePreflightForDatabase.md)
+- [OperatorVersion](docs/Model/OperatorVersion.md)
+- [OperatorVersionCheckForDatabase](docs/Model/OperatorVersionCheckForDatabase.md)
+- [Settings](docs/Model/Settings.md)
 - [SizeLimit](docs/Model/SizeLimit.md)
-- [Token](docs/Model/Token.md)
-- [TokenRequest](docs/Model/TokenRequest.md)
 - [UpdateBackupStorageParams](docs/Model/UpdateBackupStorageParams.md)
+- [Upgrade](docs/Model/Upgrade.md)
+- [UpgradePlan](docs/Model/UpgradePlan.md)
+- [UpgradeTask](docs/Model/UpgradeTask.md)
+- [UserCredentials](docs/Model/UserCredentials.md)
+- [UserPermissions](docs/Model/UserPermissions.md)
 - [Version](docs/Model/Version.md)
 
 ## Authorization
-Endpoints do not require authorization.
+
+Authentication schemes defined for the API:
+### BearerAuth
+
+- **Type**: Bearer authentication
 
 ## Tests
 

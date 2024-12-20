@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**backupSource** | [**\Everest\Model\DatabaseClusterSpecDataSourceBackupSource**](DatabaseClusterSpecDataSourceBackupSource.md) |  | [optional]
+**backupSource** | [**\Everest\Model\DatabaseClusterRestoreSpecDataSourceBackupSource**](DatabaseClusterRestoreSpecDataSourceBackupSource.md) |  | [optional]
 **dbClusterBackupName** | **string** | DBClusterBackupName is the name of the DB cluster backup to restore from | [optional]
 **pitr** | [**\Everest\Model\DatabaseClusterSpecDataSourcePitr**](DatabaseClusterSpecDataSourcePitr.md) |  | [optional]
 

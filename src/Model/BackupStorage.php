@@ -43,6 +43,7 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
       */
     protected static array $openAPITypes = [
         'type' => 'string',
+        'namespace' => 'string',
         'name' => 'string',
         'description' => 'string',
         'bucketName' => 'string',
@@ -60,6 +61,7 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
       */
     protected static array $openAPIFormats = [
         'type' => null,
+        'namespace' => null,
         'name' => null,
         'description' => null,
         'bucketName' => null,
@@ -77,6 +79,7 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
       */
     protected static array $openAPINullables = [
         'type' => false,
+        'namespace' => false,
         'name' => false,
         'description' => false,
         'bucketName' => false,
@@ -168,6 +171,7 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
      */
     protected static array $attributeMap = [
         'type' => 'type',
+        'namespace' => 'namespace',
         'name' => 'name',
         'description' => 'description',
         'bucketName' => 'bucketName',
@@ -185,6 +189,7 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
      */
     protected static array $setters = [
         'type' => 'setType',
+        'namespace' => 'setNamespace',
         'name' => 'setName',
         'description' => 'setDescription',
         'bucketName' => 'setBucketName',
@@ -202,6 +207,7 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
      */
     protected static array $getters = [
         'type' => 'getType',
+        'namespace' => 'getNamespace',
         'name' => 'getName',
         'description' => 'getDescription',
         'bucketName' => 'getBucketName',
@@ -284,6 +290,7 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
     public function __construct(array $data = null)
     {
         $this->setIfExists('type', $data ?? [], null);
+        $this->setIfExists('namespace', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('bucketName', $data ?? [], null);
@@ -337,9 +344,6 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
         if ($this->container['bucketName'] === null) {
             $invalidProperties[] = "'bucketName' can't be null";
         }
-        if ($this->container['allowedNamespaces'] === null) {
-            $invalidProperties[] = "'allowedNamespaces' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -386,6 +390,31 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
             );
         }
         $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets namespace
+     *
+     * @return null|string
+     */
+    public function getNamespace(): mixed
+    {
+        return $this->container['namespace'];
+    }
+
+    /**
+     * Sets namespace
+     *
+     * @param null|string $namespace namespace
+     */
+    public function setNamespace(mixed $namespace): static
+    {
+        if (is_null($namespace)) {
+            throw new \InvalidArgumentException('non-nullable namespace cannot be null');
+        }
+        $this->container['namespace'] = $namespace;
 
         return $this;
     }
@@ -568,7 +597,9 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
     /**
      * Gets allowedNamespaces
      *
-     * @return string[]
+     * @return null|string[]
+     *
+     * @deprecated
      */
     public function getAllowedNamespaces(): mixed
     {
@@ -578,7 +609,9 @@ class BackupStorage implements ModelInterface, \ArrayAccess, \JsonSerializable
     /**
      * Sets allowedNamespaces
      *
-     * @param string[] $allowedNamespaces List of namespaces allowed to use this backup storage
+     * @param null|string[] $allowedNamespaces List of namespaces allowed to use this backup storage
+     *
+     * @deprecated
      */
     public function setAllowedNamespaces(mixed $allowedNamespaces): static
     {

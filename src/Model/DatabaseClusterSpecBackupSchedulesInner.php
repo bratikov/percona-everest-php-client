@@ -316,7 +316,7 @@ class DatabaseClusterSpecBackupSchedulesInner implements ModelInterface, \ArrayA
     /**
      * Sets backupStorageName
      *
-     * @param string $backupStorageName BackupStorageName is the name of the BackupStorage CR that defines the storage location
+     * @param string $backupStorageName BackupStorageName is the name of the BackupStorage CR that defines the storage location. The BackupStorage must be created in the same namespace as the DatabaseCluster.
      */
     public function setBackupStorageName(mixed $backupStorageName): static
     {

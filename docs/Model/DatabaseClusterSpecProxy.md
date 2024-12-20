@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**affinity** | [**\Everest\Model\DatabaseClusterSpecEngineAffinity**](DatabaseClusterSpecEngineAffinity.md) |  | [optional]
 **config** | **string** | Config is the proxy configuration | [optional]
 **expose** | [**\Everest\Model\DatabaseClusterSpecProxyExpose**](DatabaseClusterSpecProxyExpose.md) |  | [optional]
 **replicas** | **int** | Replicas is the number of proxy replicas | [optional]

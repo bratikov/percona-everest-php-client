@@ -283,7 +283,7 @@ class DatabaseClusterSpecMonitoring implements ModelInterface, \ArrayAccess, \Js
     /**
      * Sets monitoringConfigName
      *
-     * @param null|string $monitoringConfigName MonitoringConfigName is the name of a monitoringConfig CR.
+     * @param null|string $monitoringConfigName MonitoringConfigName is the name of a monitoringConfig CR. The MonitoringConfig must be created in the same namespace as the DatabaseCluster.
      */
     public function setMonitoringConfigName(mixed $monitoringConfigName): static
     {

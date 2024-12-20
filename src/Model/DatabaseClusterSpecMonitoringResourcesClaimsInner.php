@@ -43,6 +43,7 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInner implements ModelInterfac
       */
     protected static array $openAPITypes = [
         'name' => 'string',
+        'request' => 'string',
     ];
 
     /**
@@ -52,6 +53,7 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInner implements ModelInterfac
       */
     protected static array $openAPIFormats = [
         'name' => null,
+        'request' => null,
     ];
 
     /**
@@ -61,6 +63,7 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInner implements ModelInterfac
       */
     protected static array $openAPINullables = [
         'name' => false,
+        'request' => false,
     ];
 
     /**
@@ -144,6 +147,7 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInner implements ModelInterfac
      */
     protected static array $attributeMap = [
         'name' => 'name',
+        'request' => 'request',
     ];
 
     /**
@@ -153,6 +157,7 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInner implements ModelInterfac
      */
     protected static array $setters = [
         'name' => 'setName',
+        'request' => 'setRequest',
     ];
 
     /**
@@ -162,6 +167,7 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInner implements ModelInterfac
      */
     protected static array $getters = [
         'name' => 'getName',
+        'request' => 'getRequest',
     ];
 
     /**
@@ -221,6 +227,7 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInner implements ModelInterfac
     public function __construct(array $data = null)
     {
         $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('request', $data ?? [], null);
     }
 
     /**
@@ -287,6 +294,31 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInner implements ModelInterfac
             throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
         $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets request
+     *
+     * @return null|string
+     */
+    public function getRequest(): mixed
+    {
+        return $this->container['request'];
+    }
+
+    /**
+     * Sets request
+     *
+     * @param null|string $request Request is the name chosen for a request in the referenced claim. If empty, everything from the claim is made available, otherwise only the result of this request.
+     */
+    public function setRequest(mixed $request): static
+    {
+        if (is_null($request)) {
+            throw new \InvalidArgumentException('non-nullable request cannot be null');
+        }
+        $this->container['request'] = $request;
 
         return $this;
     }

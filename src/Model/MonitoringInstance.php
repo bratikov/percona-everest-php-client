@@ -47,6 +47,7 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
         'allowedNamespaces' => 'string[]',
         'verifyTLS' => 'bool',
         'name' => 'string',
+        'namespace' => 'string',
     ];
 
     /**
@@ -60,6 +61,7 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
         'allowedNamespaces' => null,
         'verifyTLS' => null,
         'name' => null,
+        'namespace' => null,
     ];
 
     /**
@@ -73,6 +75,7 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
         'allowedNamespaces' => false,
         'verifyTLS' => false,
         'name' => false,
+        'namespace' => false,
     ];
 
     /**
@@ -160,6 +163,7 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
         'allowedNamespaces' => 'allowedNamespaces',
         'verifyTLS' => 'verifyTLS',
         'name' => 'name',
+        'namespace' => 'namespace',
     ];
 
     /**
@@ -173,6 +177,7 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
         'allowedNamespaces' => 'setAllowedNamespaces',
         'verifyTLS' => 'setVerifyTLS',
         'name' => 'setName',
+        'namespace' => 'setNamespace',
     ];
 
     /**
@@ -186,6 +191,7 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
         'allowedNamespaces' => 'getAllowedNamespaces',
         'verifyTLS' => 'getVerifyTLS',
         'name' => 'getName',
+        'namespace' => 'getNamespace',
     ];
 
     /**
@@ -262,6 +268,7 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
         $this->setIfExists('allowedNamespaces', $data ?? [], null);
         $this->setIfExists('verifyTLS', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('namespace', $data ?? [], null);
     }
 
     /**
@@ -308,9 +315,6 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
             $invalidProperties[] = "invalid value for 'url', the character length must be bigger than or equal to 1.";
         }
 
-        if ($this->container['allowedNamespaces'] === null) {
-            $invalidProperties[] = "'allowedNamespaces' can't be null";
-        }
         if ($this->container['name'] === null) {
             $invalidProperties[] = "'name' can't be null";
         }
@@ -399,7 +403,9 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
     /**
      * Gets allowedNamespaces
      *
-     * @return string[]
+     * @return null|string[]
+     *
+     * @deprecated
      */
     public function getAllowedNamespaces(): mixed
     {
@@ -409,7 +415,9 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
     /**
      * Sets allowedNamespaces
      *
-     * @param string[] $allowedNamespaces List of namespaces allowed to use this monitoring instance
+     * @param null|string[] $allowedNamespaces List of namespaces allowed to use this monitoring instance
+     *
+     * @deprecated
      */
     public function setAllowedNamespaces(mixed $allowedNamespaces): static
     {
@@ -470,6 +478,31 @@ class MonitoringInstance implements ModelInterface, \ArrayAccess, \JsonSerializa
             throw new \InvalidArgumentException('invalid length for $name when calling MonitoringInstance., must be bigger than or equal to 1.');
         }
         $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets namespace
+     *
+     * @return null|string
+     */
+    public function getNamespace(): mixed
+    {
+        return $this->container['namespace'];
+    }
+
+    /**
+     * Sets namespace
+     *
+     * @param null|string $namespace namespace
+     */
+    public function setNamespace(mixed $namespace): static
+    {
+        if (is_null($namespace)) {
+            throw new \InvalidArgumentException('non-nullable namespace cannot be null');
+        }
+        $this->container['namespace'] = $namespace;
 
         return $this;
     }

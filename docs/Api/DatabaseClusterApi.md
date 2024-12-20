@@ -4,13 +4,14 @@ All URIs are relative to /v1, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**createDatabaseCluster()**](DatabaseClusterApi.md#createDatabaseCluster) | **POST** /namespaces/{namespace}/database-clusters | Create a database cluster |
-| [**deleteDatabaseCluster()**](DatabaseClusterApi.md#deleteDatabaseCluster) | **DELETE** /namespaces/{namespace}/database-clusters/{name} | Delete the specified database cluster |
-| [**getDatabaseCluster()**](DatabaseClusterApi.md#getDatabaseCluster) | **GET** /namespaces/{namespace}/database-clusters/{name} | Get the specified database cluster |
-| [**getDatabaseClusterCredentials()**](DatabaseClusterApi.md#getDatabaseClusterCredentials) | **GET** /namespaces/{namespace}/database-clusters/{name}/credentials | Get the specified database cluster credentials |
-| [**getDatabaseClusterPitr()**](DatabaseClusterApi.md#getDatabaseClusterPitr) | **GET** /namespaces/{namespace}/database-clusters/{name}/pitr | Get the Point-in-Time related data for the specified database cluster |
-| [**listDatabaseClusters()**](DatabaseClusterApi.md#listDatabaseClusters) | **GET** /namespaces/{namespace}/database-clusters | List of the created database clusters |
-| [**updateDatabaseCluster()**](DatabaseClusterApi.md#updateDatabaseCluster) | **PUT** /namespaces/{namespace}/database-clusters/{name} | Replace the specified database cluster |
+| [**createDatabaseCluster()**](DatabaseClusterApi.md#createDatabaseCluster) | **POST** /namespaces/{namespace}/database-clusters | Create database cluster |
+| [**deleteDatabaseCluster()**](DatabaseClusterApi.md#deleteDatabaseCluster) | **DELETE** /namespaces/{namespace}/database-clusters/{name} | Delete database cluster |
+| [**getDatabaseCluster()**](DatabaseClusterApi.md#getDatabaseCluster) | **GET** /namespaces/{namespace}/database-clusters/{name} | Get database cluster |
+| [**getDatabaseClusterComponents()**](DatabaseClusterApi.md#getDatabaseClusterComponents) | **GET** /namespaces/{namespace}/database-clusters/{name}/components | Get database cluster components |
+| [**getDatabaseClusterCredentials()**](DatabaseClusterApi.md#getDatabaseClusterCredentials) | **GET** /namespaces/{namespace}/database-clusters/{name}/credentials | Get database cluster credentials |
+| [**getDatabaseClusterPitr()**](DatabaseClusterApi.md#getDatabaseClusterPitr) | **GET** /namespaces/{namespace}/database-clusters/{name}/pitr | Get the Point-in-Time recovery info |
+| [**listDatabaseClusters()**](DatabaseClusterApi.md#listDatabaseClusters) | **GET** /namespaces/{namespace}/database-clusters | List database clusters |
+| [**updateDatabaseCluster()**](DatabaseClusterApi.md#updateDatabaseCluster) | **PUT** /namespaces/{namespace}/database-clusters/{name} | Update database cluster |
 
 
 ## `createDatabaseCluster()`
@@ -19,9 +20,9 @@ All URIs are relative to /v1, except if the operation defines another base path.
 createDatabaseCluster($namespace, $databaseCluster): \Everest\Model\DatabaseCluster
 ```
 
-Create a database cluster
+Create database cluster
 
-Create a database cluster
+This API creates a new database cluster in the specified namespace.
 
 ### Example
 
@@ -30,11 +31,15 @@ Create a database cluster
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseClusterApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 $databaseCluster = new \Everest\Model\DatabaseCluster(); // \Everest\Model\DatabaseCluster | The database cluster object to be created
@@ -60,7 +65,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -77,9 +82,9 @@ No authorization required
 deleteDatabaseCluster($namespace, $name, $cleanupBackupStorage): \Everest\Model\IoK8sApimachineryPkgApisMetaV1StatusV2
 ```
 
-Delete the specified database cluster
+Delete database cluster
 
-Delete the specified database cluster
+This API deletes the database cluster specified by the `name` and `namespace`.
 
 ### Example
 
@@ -88,11 +93,15 @@ Delete the specified database cluster
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseClusterApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 $name = 'name_example'; // string | Name of the database cluster. Can be found under Metadata[\"name\"] of the DatabaseCluster object.
@@ -120,7 +129,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -137,9 +146,9 @@ No authorization required
 getDatabaseCluster($namespace, $name): \Everest\Model\DatabaseCluster
 ```
 
-Get the specified database cluster
+Get database cluster
 
-Get the specified database cluster
+This API gets the database cluster specified by the `name` and `namespace`.
 
 ### Example
 
@@ -148,11 +157,15 @@ Get the specified database cluster
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseClusterApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 $name = 'name_example'; // string | Name of the database cluster. Can be found under Metadata[\"name\"] of the DatabaseCluster object.
@@ -178,7 +191,69 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `getDatabaseClusterComponents()`
+
+```php
+getDatabaseClusterComponents($namespace, $name): \Everest\Model\DatabaseClusterComponentsInner[]
+```
+
+Get database cluster components
+
+This API gets the various components of the database cluster specified by the `name` and `namespace`.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Everest\Api\DatabaseClusterApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$namespace = 'namespace_example'; // string | Name of the namespace
+$name = 'name_example'; // string | Name of the database cluster. Can be found under Metadata[\"name\"] of the DatabaseCluster object.
+
+try {
+    $result = $apiInstance->getDatabaseClusterComponents($namespace, $name);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DatabaseClusterApi->getDatabaseClusterComponents: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **namespace** | **string**| Name of the namespace | |
+| **name** | **string**| Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. | |
+
+### Return type
+
+[**\Everest\Model\DatabaseClusterComponentsInner[]**](../Model/DatabaseClusterComponentsInner.md)
+
+### Authorization
+
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -195,9 +270,9 @@ No authorization required
 getDatabaseClusterCredentials($namespace, $name): \Everest\Model\DatabaseClusterCredential
 ```
 
-Get the specified database cluster credentials
+Get database cluster credentials
 
-Get the specified database cluster credentials
+This API gets the credentials for the database cluster specified by the `name` and `namespace`.
 
 ### Example
 
@@ -206,11 +281,15 @@ Get the specified database cluster credentials
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseClusterApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 $name = 'name_example'; // string | Name of the database cluster. Can be found under Metadata[\"name\"] of the DatabaseCluster object.
@@ -236,7 +315,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -253,9 +332,9 @@ No authorization required
 getDatabaseClusterPitr($namespace, $name): \Everest\Model\DatabaseClusterPitr
 ```
 
-Get the Point-in-Time related data for the specified database cluster
+Get the Point-in-Time recovery info
 
-Get the Point-in-Time related data for the specified database cluster
+This API gets the Point-in-Time recovery info for the database cluster specified by the `name` and `namespace`.
 
 ### Example
 
@@ -264,11 +343,15 @@ Get the Point-in-Time related data for the specified database cluster
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseClusterApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 $name = 'name_example'; // string | Name of the database cluster. Can be found under Metadata[\"name\"] of the DatabaseCluster object.
@@ -294,7 +377,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -311,9 +394,9 @@ No authorization required
 listDatabaseClusters($namespace): \Everest\Model\DatabaseClusterList
 ```
 
-List of the created database clusters
+List database clusters
 
-List of the created database clusters
+This API lists all database clusters in the specified namespace.
 
 ### Example
 
@@ -322,11 +405,15 @@ List of the created database clusters
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseClusterApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 
@@ -350,7 +437,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -367,9 +454,9 @@ No authorization required
 updateDatabaseCluster($namespace, $name, $databaseCluster): \Everest\Model\DatabaseCluster
 ```
 
-Replace the specified database cluster
+Update database cluster
 
-Replace the specified database cluster
+This API updates a database cluster specified by the `name` and `namespace`.
 
 ### Example
 
@@ -378,11 +465,15 @@ Replace the specified database cluster
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseClusterApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 $name = 'name_example'; // string | Name of the database cluster. Can be found under Metadata[\"name\"] of the DatabaseCluster object.
@@ -410,7 +501,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 

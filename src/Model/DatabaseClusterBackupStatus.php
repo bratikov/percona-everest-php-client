@@ -46,6 +46,7 @@ class DatabaseClusterBackupStatus implements ModelInterface, \ArrayAccess, \Json
         'created' => '\DateTime',
         'destination' => 'string',
         'gaps' => 'bool',
+        'latestRestorableTime' => '\DateTime',
         'state' => 'string',
     ];
 
@@ -59,6 +60,7 @@ class DatabaseClusterBackupStatus implements ModelInterface, \ArrayAccess, \Json
         'created' => 'date-time',
         'destination' => null,
         'gaps' => null,
+        'latestRestorableTime' => 'date-time',
         'state' => null,
     ];
 
@@ -72,6 +74,7 @@ class DatabaseClusterBackupStatus implements ModelInterface, \ArrayAccess, \Json
         'created' => false,
         'destination' => false,
         'gaps' => false,
+        'latestRestorableTime' => false,
         'state' => false,
     ];
 
@@ -159,6 +162,7 @@ class DatabaseClusterBackupStatus implements ModelInterface, \ArrayAccess, \Json
         'created' => 'created',
         'destination' => 'destination',
         'gaps' => 'gaps',
+        'latestRestorableTime' => 'latestRestorableTime',
         'state' => 'state',
     ];
 
@@ -172,6 +176,7 @@ class DatabaseClusterBackupStatus implements ModelInterface, \ArrayAccess, \Json
         'created' => 'setCreated',
         'destination' => 'setDestination',
         'gaps' => 'setGaps',
+        'latestRestorableTime' => 'setLatestRestorableTime',
         'state' => 'setState',
     ];
 
@@ -185,6 +190,7 @@ class DatabaseClusterBackupStatus implements ModelInterface, \ArrayAccess, \Json
         'created' => 'getCreated',
         'destination' => 'getDestination',
         'gaps' => 'getGaps',
+        'latestRestorableTime' => 'getLatestRestorableTime',
         'state' => 'getState',
     ];
 
@@ -248,6 +254,7 @@ class DatabaseClusterBackupStatus implements ModelInterface, \ArrayAccess, \Json
         $this->setIfExists('created', $data ?? [], null);
         $this->setIfExists('destination', $data ?? [], null);
         $this->setIfExists('gaps', $data ?? [], null);
+        $this->setIfExists('latestRestorableTime', $data ?? [], null);
         $this->setIfExists('state', $data ?? [], null);
     }
 
@@ -390,6 +397,31 @@ class DatabaseClusterBackupStatus implements ModelInterface, \ArrayAccess, \Json
             throw new \InvalidArgumentException('non-nullable gaps cannot be null');
         }
         $this->container['gaps'] = $gaps;
+
+        return $this;
+    }
+
+    /**
+     * Gets latestRestorableTime
+     *
+     * @return null|\DateTime
+     */
+    public function getLatestRestorableTime(): mixed
+    {
+        return $this->container['latestRestorableTime'];
+    }
+
+    /**
+     * Sets latestRestorableTime
+     *
+     * @param null|\DateTime $latestRestorableTime LatestRestorableTime is the latest time that can be used for PITR restore
+     */
+    public function setLatestRestorableTime(mixed $latestRestorableTime): static
+    {
+        if (is_null($latestRestorableTime)) {
+            throw new \InvalidArgumentException('non-nullable latestRestorableTime cannot be null');
+        }
+        $this->container['latestRestorableTime'] = $latestRestorableTime;
 
         return $this;
     }

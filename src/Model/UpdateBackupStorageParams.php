@@ -523,6 +523,8 @@ class UpdateBackupStorageParams implements ModelInterface, \ArrayAccess, \JsonSe
      * Gets allowedNamespaces
      *
      * @return null|string[]
+     *
+     * @deprecated
      */
     public function getAllowedNamespaces(): mixed
     {
@@ -533,6 +535,8 @@ class UpdateBackupStorageParams implements ModelInterface, \ArrayAccess, \JsonSe
      * Sets allowedNamespaces
      *
      * @param null|string[] $allowedNamespaces List of namespaces allowed to use this backup storage
+     *
+     * @deprecated
      */
     public function setAllowedNamespaces(mixed $allowedNamespaces): static
     {

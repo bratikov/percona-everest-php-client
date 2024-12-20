@@ -42,6 +42,7 @@ class DatabaseClusterCredential implements ModelInterface, \ArrayAccess, \JsonSe
       * @var array<string, string>
       */
     protected static array $openAPITypes = [
+        'connectionUrl' => 'string',
         'username' => 'string',
         'password' => 'string',
     ];
@@ -52,6 +53,7 @@ class DatabaseClusterCredential implements ModelInterface, \ArrayAccess, \JsonSe
       * @var array<string, null|string>
       */
     protected static array $openAPIFormats = [
+        'connectionUrl' => null,
         'username' => null,
         'password' => null,
     ];
@@ -62,6 +64,7 @@ class DatabaseClusterCredential implements ModelInterface, \ArrayAccess, \JsonSe
       * @var array<string, bool>
       */
     protected static array $openAPINullables = [
+        'connectionUrl' => false,
         'username' => false,
         'password' => false,
     ];
@@ -146,6 +149,7 @@ class DatabaseClusterCredential implements ModelInterface, \ArrayAccess, \JsonSe
      * @var array<string, string>
      */
     protected static array $attributeMap = [
+        'connectionUrl' => 'connectionUrl',
         'username' => 'username',
         'password' => 'password',
     ];
@@ -156,6 +160,7 @@ class DatabaseClusterCredential implements ModelInterface, \ArrayAccess, \JsonSe
      * @var array<string, string>
      */
     protected static array $setters = [
+        'connectionUrl' => 'setConnectionUrl',
         'username' => 'setUsername',
         'password' => 'setPassword',
     ];
@@ -166,6 +171,7 @@ class DatabaseClusterCredential implements ModelInterface, \ArrayAccess, \JsonSe
      * @var array<string, string>
      */
     protected static array $getters = [
+        'connectionUrl' => 'getConnectionUrl',
         'username' => 'getUsername',
         'password' => 'getPassword',
     ];
@@ -226,6 +232,7 @@ class DatabaseClusterCredential implements ModelInterface, \ArrayAccess, \JsonSe
      */
     public function __construct(array $data = null)
     {
+        $this->setIfExists('connectionUrl', $data ?? [], null);
         $this->setIfExists('username', $data ?? [], null);
         $this->setIfExists('password', $data ?? [], null);
     }
@@ -269,6 +276,31 @@ class DatabaseClusterCredential implements ModelInterface, \ArrayAccess, \JsonSe
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets connectionUrl
+     *
+     * @return null|string
+     */
+    public function getConnectionUrl(): mixed
+    {
+        return $this->container['connectionUrl'];
+    }
+
+    /**
+     * Sets connectionUrl
+     *
+     * @param null|string $connectionUrl connectionUrl
+     */
+    public function setConnectionUrl(mixed $connectionUrl): static
+    {
+        if (is_null($connectionUrl)) {
+            throw new \InvalidArgumentException('non-nullable connectionUrl cannot be null');
+        }
+        $this->container['connectionUrl'] = $connectionUrl;
+
+        return $this;
+    }
 
     /**
      * Gets username

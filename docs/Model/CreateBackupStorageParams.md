@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **secretKey** | **string** |  |
 **url** | **string** |  | [optional]
 **region** | **string** |  | [optional]
-**allowedNamespaces** | **string[]** | List of namespaces allowed to use this backup storage |
+**allowedNamespaces** | **string[]** | List of namespaces allowed to use this backup storage | [optional]
 **verifyTLS** | **bool** |  | [optional] [default to true]
 **forcePathStyle** | **bool** |  | [optional] [default to false]
 

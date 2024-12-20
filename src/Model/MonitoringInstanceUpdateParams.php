@@ -384,6 +384,8 @@ class MonitoringInstanceUpdateParams implements ModelInterface, \ArrayAccess, \J
      * Gets allowedNamespaces
      *
      * @return null|string[]
+     *
+     * @deprecated
      */
     public function getAllowedNamespaces(): mixed
     {
@@ -394,6 +396,8 @@ class MonitoringInstanceUpdateParams implements ModelInterface, \ArrayAccess, \J
      * Sets allowedNamespaces
      *
      * @param null|string[] $allowedNamespaces List of namespaces allowed to use this monitoring instance
+     *
+     * @deprecated
      */
     public function setAllowedNamespaces(mixed $allowedNamespaces): static
     {

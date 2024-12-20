@@ -290,7 +290,7 @@ class DatabaseClusterSpecMonitoringResources implements ModelInterface, \ArrayAc
     /**
      * Sets claims
      *
-     * @param null|\Everest\Model\DatabaseClusterSpecMonitoringResourcesClaimsInner[] $claims Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container.   This is an alpha field and requires enabling the DynamicResourceAllocation feature gate.   This field is immutable. It can only be set for containers.
+     * @param null|\Everest\Model\DatabaseClusterSpecMonitoringResourcesClaimsInner[] $claims Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container.  This is an alpha field and requires enabling the DynamicResourceAllocation feature gate.  This field is immutable. It can only be set for containers.
      */
     public function setClaims(mixed $claims): static
     {

@@ -43,10 +43,14 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
       */
     protected static array $openAPITypes = [
         'activeStorage' => 'string',
+        'crVersion' => 'string',
+        'details' => 'string',
         'hostname' => 'string',
         'message' => 'string',
+        'observedGeneration' => 'int',
         'port' => 'int',
         'ready' => 'int',
+        'recommendedCRVersion' => 'string',
         'size' => 'int',
         'status' => 'string',
     ];
@@ -58,10 +62,14 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
       */
     protected static array $openAPIFormats = [
         'activeStorage' => null,
+        'crVersion' => null,
+        'details' => null,
         'hostname' => null,
         'message' => null,
+        'observedGeneration' => 'int64',
         'port' => 'int32',
         'ready' => 'int32',
+        'recommendedCRVersion' => null,
         'size' => 'int32',
         'status' => null,
     ];
@@ -73,10 +81,14 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
       */
     protected static array $openAPINullables = [
         'activeStorage' => false,
+        'crVersion' => false,
+        'details' => false,
         'hostname' => false,
         'message' => false,
+        'observedGeneration' => false,
         'port' => false,
         'ready' => false,
+        'recommendedCRVersion' => false,
         'size' => false,
         'status' => false,
     ];
@@ -162,10 +174,14 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
      */
     protected static array $attributeMap = [
         'activeStorage' => 'activeStorage',
+        'crVersion' => 'crVersion',
+        'details' => 'details',
         'hostname' => 'hostname',
         'message' => 'message',
+        'observedGeneration' => 'observedGeneration',
         'port' => 'port',
         'ready' => 'ready',
+        'recommendedCRVersion' => 'recommendedCRVersion',
         'size' => 'size',
         'status' => 'status',
     ];
@@ -177,10 +193,14 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
      */
     protected static array $setters = [
         'activeStorage' => 'setActiveStorage',
+        'crVersion' => 'setCrVersion',
+        'details' => 'setDetails',
         'hostname' => 'setHostname',
         'message' => 'setMessage',
+        'observedGeneration' => 'setObservedGeneration',
         'port' => 'setPort',
         'ready' => 'setReady',
+        'recommendedCRVersion' => 'setRecommendedCRVersion',
         'size' => 'setSize',
         'status' => 'setStatus',
     ];
@@ -192,10 +212,14 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
      */
     protected static array $getters = [
         'activeStorage' => 'getActiveStorage',
+        'crVersion' => 'getCrVersion',
+        'details' => 'getDetails',
         'hostname' => 'getHostname',
         'message' => 'getMessage',
+        'observedGeneration' => 'getObservedGeneration',
         'port' => 'getPort',
         'ready' => 'getReady',
+        'recommendedCRVersion' => 'getRecommendedCRVersion',
         'size' => 'getSize',
         'status' => 'getStatus',
     ];
@@ -257,10 +281,14 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
     public function __construct(array $data = null)
     {
         $this->setIfExists('activeStorage', $data ?? [], null);
+        $this->setIfExists('crVersion', $data ?? [], null);
+        $this->setIfExists('details', $data ?? [], null);
         $this->setIfExists('hostname', $data ?? [], null);
         $this->setIfExists('message', $data ?? [], null);
+        $this->setIfExists('observedGeneration', $data ?? [], null);
         $this->setIfExists('port', $data ?? [], null);
         $this->setIfExists('ready', $data ?? [], null);
+        $this->setIfExists('recommendedCRVersion', $data ?? [], null);
         $this->setIfExists('size', $data ?? [], null);
         $this->setIfExists('status', $data ?? [], null);
     }
@@ -331,6 +359,56 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
     }
 
     /**
+     * Gets crVersion
+     *
+     * @return null|string
+     */
+    public function getCrVersion(): mixed
+    {
+        return $this->container['crVersion'];
+    }
+
+    /**
+     * Sets crVersion
+     *
+     * @param null|string $crVersion CRVersion is the observed version of the CR used with the underlying operator.
+     */
+    public function setCrVersion(mixed $crVersion): static
+    {
+        if (is_null($crVersion)) {
+            throw new \InvalidArgumentException('non-nullable crVersion cannot be null');
+        }
+        $this->container['crVersion'] = $crVersion;
+
+        return $this;
+    }
+
+    /**
+     * Gets details
+     *
+     * @return null|string
+     */
+    public function getDetails(): mixed
+    {
+        return $this->container['details'];
+    }
+
+    /**
+     * Sets details
+     *
+     * @param null|string $details Details provides full status of the upstream cluster as a plain text.
+     */
+    public function setDetails(mixed $details): static
+    {
+        if (is_null($details)) {
+            throw new \InvalidArgumentException('non-nullable details cannot be null');
+        }
+        $this->container['details'] = $details;
+
+        return $this;
+    }
+
+    /**
      * Gets hostname
      *
      * @return null|string
@@ -381,6 +459,31 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
     }
 
     /**
+     * Gets observedGeneration
+     *
+     * @return null|int
+     */
+    public function getObservedGeneration(): mixed
+    {
+        return $this->container['observedGeneration'];
+    }
+
+    /**
+     * Sets observedGeneration
+     *
+     * @param null|int $observedGeneration ObservedGeneration is the most recent generation observed for this DatabaseCluster.
+     */
+    public function setObservedGeneration(mixed $observedGeneration): static
+    {
+        if (is_null($observedGeneration)) {
+            throw new \InvalidArgumentException('non-nullable observedGeneration cannot be null');
+        }
+        $this->container['observedGeneration'] = $observedGeneration;
+
+        return $this;
+    }
+
+    /**
      * Gets port
      *
      * @return null|int
@@ -426,6 +529,31 @@ class DatabaseClusterStatus implements ModelInterface, \ArrayAccess, \JsonSerial
             throw new \InvalidArgumentException('non-nullable ready cannot be null');
         }
         $this->container['ready'] = $ready;
+
+        return $this;
+    }
+
+    /**
+     * Gets recommendedCRVersion
+     *
+     * @return null|string
+     */
+    public function getRecommendedCRVersion(): mixed
+    {
+        return $this->container['recommendedCRVersion'];
+    }
+
+    /**
+     * Sets recommendedCRVersion
+     *
+     * @param null|string $recommendedCRVersion RecommendedCRVersion is the recommended version of the CR to use. If set, the CR needs to be updated to this version before upgrading the operator. If unset, the CR is already at the recommended version.
+     */
+    public function setRecommendedCRVersion(mixed $recommendedCRVersion): static
+    {
+        if (is_null($recommendedCRVersion)) {
+            throw new \InvalidArgumentException('non-nullable recommendedCRVersion cannot be null');
+        }
+        $this->container['recommendedCRVersion'] = $recommendedCRVersion;
 
         return $this;
     }

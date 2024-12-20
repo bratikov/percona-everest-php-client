@@ -289,7 +289,7 @@ class DatabaseClusterSpecDataSourceBackupSource implements ModelInterface, \Arra
     /**
      * Sets backupStorageName
      *
-     * @param string $backupStorageName BackupStorageName is the name of the BackupStorage used for backups.
+     * @param string $backupStorageName BackupStorageName is the name of the BackupStorage used for backups. The BackupStorage must be created in the same namespace as the DatabaseCluster.
      */
     public function setBackupStorageName(mixed $backupStorageName): static
     {

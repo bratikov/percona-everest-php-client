@@ -11,5 +11,6 @@ Name | Type | Description | Notes
 **monitoring** | [**\Everest\Model\DatabaseClusterSpecMonitoring**](DatabaseClusterSpecMonitoring.md) |  | [optional]
 **paused** | **bool** | Paused is a flag to stop the cluster | [optional]
 **proxy** | [**\Everest\Model\DatabaseClusterSpecProxy**](DatabaseClusterSpecProxy.md) |  | [optional]
+**sharding** | [**\Everest\Model\DatabaseClusterSpecSharding**](DatabaseClusterSpecSharding.md) |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

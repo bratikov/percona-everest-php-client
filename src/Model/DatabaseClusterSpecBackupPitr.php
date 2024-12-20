@@ -293,7 +293,7 @@ class DatabaseClusterSpecBackupPitr implements ModelInterface, \ArrayAccess, \Js
     /**
      * Sets backupStorageName
      *
-     * @param null|string $backupStorageName BackupStorageName is the name of the BackupStorage where the PITR is enabled
+     * @param null|string $backupStorageName BackupStorageName is the name of the BackupStorage where the PITR is enabled The BackupStorage must be created in the same namespace as the DatabaseCluster.
      */
     public function setBackupStorageName(mixed $backupStorageName): static
     {

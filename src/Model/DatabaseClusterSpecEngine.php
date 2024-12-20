@@ -42,7 +42,9 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
       * @var array<string, string>
       */
     protected static array $openAPITypes = [
+        'affinity' => '\Everest\Model\DatabaseClusterSpecEngineAffinity',
         'config' => 'string',
+        'crVersion' => 'string',
         'replicas' => 'int',
         'resources' => '\Everest\Model\DatabaseClusterSpecEngineResources',
         'storage' => '\Everest\Model\DatabaseClusterSpecEngineStorage',
@@ -57,7 +59,9 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
       * @var array<string, null|string>
       */
     protected static array $openAPIFormats = [
+        'affinity' => null,
         'config' => null,
+        'crVersion' => null,
         'replicas' => 'int32',
         'resources' => null,
         'storage' => null,
@@ -72,7 +76,9 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
       * @var array<string, bool>
       */
     protected static array $openAPINullables = [
+        'affinity' => false,
         'config' => false,
+        'crVersion' => false,
         'replicas' => false,
         'resources' => false,
         'storage' => false,
@@ -161,7 +167,9 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
      * @var array<string, string>
      */
     protected static array $attributeMap = [
+        'affinity' => 'affinity',
         'config' => 'config',
+        'crVersion' => 'crVersion',
         'replicas' => 'replicas',
         'resources' => 'resources',
         'storage' => 'storage',
@@ -176,7 +184,9 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
      * @var array<string, string>
      */
     protected static array $setters = [
+        'affinity' => 'setAffinity',
         'config' => 'setConfig',
+        'crVersion' => 'setCrVersion',
         'replicas' => 'setReplicas',
         'resources' => 'setResources',
         'storage' => 'setStorage',
@@ -191,7 +201,9 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
      * @var array<string, string>
      */
     protected static array $getters = [
+        'affinity' => 'getAffinity',
         'config' => 'getConfig',
+        'crVersion' => 'getCrVersion',
         'replicas' => 'getReplicas',
         'resources' => 'getResources',
         'storage' => 'getStorage',
@@ -273,7 +285,9 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
      */
     public function __construct(array $data = null)
     {
+        $this->setIfExists('affinity', $data ?? [], null);
         $this->setIfExists('config', $data ?? [], null);
+        $this->setIfExists('crVersion', $data ?? [], null);
         $this->setIfExists('replicas', $data ?? [], null);
         $this->setIfExists('resources', $data ?? [], null);
         $this->setIfExists('storage', $data ?? [], null);
@@ -342,6 +356,31 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
 
 
     /**
+     * Gets affinity
+     *
+     * @return null|\Everest\Model\DatabaseClusterSpecEngineAffinity
+     */
+    public function getAffinity(): mixed
+    {
+        return $this->container['affinity'];
+    }
+
+    /**
+     * Sets affinity
+     *
+     * @param null|\Everest\Model\DatabaseClusterSpecEngineAffinity $affinity affinity
+     */
+    public function setAffinity(mixed $affinity): static
+    {
+        if (is_null($affinity)) {
+            throw new \InvalidArgumentException('non-nullable affinity cannot be null');
+        }
+        $this->container['affinity'] = $affinity;
+
+        return $this;
+    }
+
+    /**
      * Gets config
      *
      * @return null|string
@@ -362,6 +401,31 @@ class DatabaseClusterSpecEngine implements ModelInterface, \ArrayAccess, \JsonSe
             throw new \InvalidArgumentException('non-nullable config cannot be null');
         }
         $this->container['config'] = $config;
+
+        return $this;
+    }
+
+    /**
+     * Gets crVersion
+     *
+     * @return null|string
+     */
+    public function getCrVersion(): mixed
+    {
+        return $this->container['crVersion'];
+    }
+
+    /**
+     * Sets crVersion
+     *
+     * @param null|string $crVersion CRVersion is the desired version of the CR to use with the underlying operator. If unspecified, everest-operator will use the same version as the operator.  NOTE: Updating this property post installation may lead to a restart of the cluster.
+     */
+    public function setCrVersion(mixed $crVersion): static
+    {
+        if (is_null($crVersion)) {
+            throw new \InvalidArgumentException('non-nullable crVersion cannot be null');
+        }
+        $this->container['crVersion'] = $crVersion;
 
         return $this;
     }

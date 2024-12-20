@@ -4,22 +4,22 @@ All URIs are relative to /v1, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**createBackupStorage()**](BackupStorageApi.md#createBackupStorage) | **POST** /backup-storages | Create a new backup storage object |
-| [**deleteBackupStorage()**](BackupStorageApi.md#deleteBackupStorage) | **DELETE** /backup-storages/{name} | Delete the specified backup storage |
-| [**getBackupStorage()**](BackupStorageApi.md#getBackupStorage) | **GET** /backup-storages/{name} | Get the specified backup storage |
-| [**listBackupStorages()**](BackupStorageApi.md#listBackupStorages) | **GET** /backup-storages | List of the created backup storages |
-| [**updateBackupStorage()**](BackupStorageApi.md#updateBackupStorage) | **PATCH** /backup-storages/{name} | Partial update of the specified backup storage |
+| [**createBackupStorage()**](BackupStorageApi.md#createBackupStorage) | **POST** /namespaces/{namespace}/backup-storages | Create backup storage |
+| [**deleteBackupStorage()**](BackupStorageApi.md#deleteBackupStorage) | **DELETE** /namespaces/{namespace}/backup-storages/{name} | Delete backup storage |
+| [**getBackupStorage()**](BackupStorageApi.md#getBackupStorage) | **GET** /namespaces/{namespace}/backup-storages/{name} | Get backup storage |
+| [**listBackupStorages()**](BackupStorageApi.md#listBackupStorages) | **GET** /namespaces/{namespace}/backup-storages | List backup storages |
+| [**updateBackupStorage()**](BackupStorageApi.md#updateBackupStorage) | **PATCH** /namespaces/{namespace}/backup-storages/{name} | Update backup storage |
 
 
 ## `createBackupStorage()`
 
 ```php
-createBackupStorage($createBackupStorageParams): \Everest\Model\BackupStorage
+createBackupStorage($namespace, $createBackupStorageParams): \Everest\Model\BackupStorage
 ```
 
-Create a new backup storage object
+Create backup storage
 
-Create a new backup storage object.  **Examples**:   ```   {     \"name\": \"s3-storage\",     \"type\": \"s3\",     \"bucketName\": \"bucket1\",     \"accessKey\": \"access_key\",     \"secretKey\": \"secret_key\",     \"region\": \"eu-central-1\"   }   ```    ```   {     \"name\": \"azure-storage\",     \"type\": \"azure\",     \"bucketName\": \"container1\",     \"accessKey\": \"storage_account_name\",     \"secretKey\": \"storage_account_key\",   }   ```
+This API creates a new backup storage.  **Examples**:   ```   {     \"metadata\": {       \"name\": \"s3-storage\",       \"namespace\": \"everest\",     },     \"spec\": {       \"type\": \"s3\",       \"bucketName\": \"bucket1\",       \"accessKey\": \"access_key\",       \"secretKey\": \"secret_key\",       \"region\": \"eu-central-1\"     },   }   ```    ```   {     \"metadata\": {       \"name\": \"azure-storage\",       \"namespace\": \"everest\",     },     \"spec\": {       \"type\": \"azure\",       \"bucketName\": \"container1\",       \"accessKey\": \"storage_account_name\",       \"secretKey\": \"storage_account_key\",     },   }   ```
 
 ### Example
 
@@ -28,16 +28,21 @@ Create a new backup storage object.  **Examples**:   ```   {     \"name\": \"s3-
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\BackupStorageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
+$namespace = 'namespace_example'; // string | Namespace of the backup storage
 $createBackupStorageParams = new \Everest\Model\CreateBackupStorageParams(); // \Everest\Model\CreateBackupStorageParams | The backup storage object to be created
 
 try {
-    $result = $apiInstance->createBackupStorage($createBackupStorageParams);
+    $result = $apiInstance->createBackupStorage($namespace, $createBackupStorageParams);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling BackupStorageApi->createBackupStorage: ', $e->getMessage(), PHP_EOL;
@@ -48,6 +53,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **namespace** | **string**| Namespace of the backup storage | |
 | **createBackupStorageParams** | [**\Everest\Model\CreateBackupStorageParams**](../Model/CreateBackupStorageParams.md)| The backup storage object to be created | |
 
 ### Return type
@@ -56,7 +62,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -70,12 +76,12 @@ No authorization required
 ## `deleteBackupStorage()`
 
 ```php
-deleteBackupStorage($name)
+deleteBackupStorage($name, $namespace)
 ```
 
-Delete the specified backup storage
+Delete backup storage
 
-Delete the specified backup storage
+This API deletes the backup storage specified by the `name`.
 
 ### Example
 
@@ -84,16 +90,21 @@ Delete the specified backup storage
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\BackupStorageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $name = 'name_example'; // string | Name of the backup storage
+$namespace = 'namespace_example'; // string | Namespace of the backup storage
 
 try {
-    $apiInstance->deleteBackupStorage($name);
+    $apiInstance->deleteBackupStorage($name, $namespace);
 } catch (Exception $e) {
     echo 'Exception when calling BackupStorageApi->deleteBackupStorage: ', $e->getMessage(), PHP_EOL;
 }
@@ -104,6 +115,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **name** | **string**| Name of the backup storage | |
+| **namespace** | **string**| Namespace of the backup storage | |
 
 ### Return type
 
@@ -111,7 +123,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -125,12 +137,12 @@ No authorization required
 ## `getBackupStorage()`
 
 ```php
-getBackupStorage($name): \Everest\Model\BackupStorage
+getBackupStorage($name, $namespace): \Everest\Model\BackupStorage
 ```
 
-Get the specified backup storage
+Get backup storage
 
-Get the specified backup storage
+This API gets the backup storage speciciied by the `name` in the given `namespace`.
 
 ### Example
 
@@ -139,16 +151,21 @@ Get the specified backup storage
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\BackupStorageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $name = 'name_example'; // string | Name of the backup storage
+$namespace = 'namespace_example'; // string | Namespace of the backup storage
 
 try {
-    $result = $apiInstance->getBackupStorage($name);
+    $result = $apiInstance->getBackupStorage($name, $namespace);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling BackupStorageApi->getBackupStorage: ', $e->getMessage(), PHP_EOL;
@@ -160,6 +177,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **name** | **string**| Name of the backup storage | |
+| **namespace** | **string**| Namespace of the backup storage | |
 
 ### Return type
 
@@ -167,7 +185,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -181,12 +199,12 @@ No authorization required
 ## `listBackupStorages()`
 
 ```php
-listBackupStorages(): \Everest\Model\BackupStorage[]
+listBackupStorages($namespace): \Everest\Model\BackupStorage[]
 ```
 
-List of the created backup storages
+List backup storages
 
-List of the created backup storages
+This API lists all backup storages.
 
 ### Example
 
@@ -195,15 +213,20 @@ List of the created backup storages
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\BackupStorageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
+$namespace = 'namespace_example'; // string | Namespace of the backup storage
 
 try {
-    $result = $apiInstance->listBackupStorages();
+    $result = $apiInstance->listBackupStorages($namespace);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling BackupStorageApi->listBackupStorages: ', $e->getMessage(), PHP_EOL;
@@ -212,7 +235,9 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **namespace** | **string**| Namespace of the backup storage | |
 
 ### Return type
 
@@ -220,7 +245,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -234,12 +259,12 @@ No authorization required
 ## `updateBackupStorage()`
 
 ```php
-updateBackupStorage($name, $updateBackupStorageParams): \Everest\Model\BackupStorage
+updateBackupStorage($name, $namespace, $updateBackupStorageParams): \Everest\Model\BackupStorage
 ```
 
-Partial update of the specified backup storage
+Update backup storage
 
-Partial update of the specified backup storage. Updates only the specified fields.
+This API updates the backup storage specified by the `name`. Only the specified fields will be updated.
 
 ### Example
 
@@ -248,17 +273,22 @@ Partial update of the specified backup storage. Updates only the specified field
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\BackupStorageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $name = 'name_example'; // string | Name of the backup storage
+$namespace = 'namespace_example'; // string | Namespace of the backup storage
 $updateBackupStorageParams = new \Everest\Model\UpdateBackupStorageParams(); // \Everest\Model\UpdateBackupStorageParams | The backup storage params. Only the specified fields will be updated.
 
 try {
-    $result = $apiInstance->updateBackupStorage($name, $updateBackupStorageParams);
+    $result = $apiInstance->updateBackupStorage($name, $namespace, $updateBackupStorageParams);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling BackupStorageApi->updateBackupStorage: ', $e->getMessage(), PHP_EOL;
@@ -270,6 +300,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **name** | **string**| Name of the backup storage | |
+| **namespace** | **string**| Namespace of the backup storage | |
 | **updateBackupStorageParams** | [**\Everest\Model\UpdateBackupStorageParams**](../Model/UpdateBackupStorageParams.md)| The backup storage params. Only the specified fields will be updated. | |
 
 ### Return type
@@ -278,7 +309,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 

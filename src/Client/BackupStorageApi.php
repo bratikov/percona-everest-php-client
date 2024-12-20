@@ -94,8 +94,9 @@ class BackupStorageApi
     }
 
     /**
-     * createBackupStorage: Create a new backup storage object
+     * createBackupStorage: Create backup storage
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\CreateBackupStorageParams $createBackupStorageParams The backup storage object to be created (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBackupStorage'] to see the possible values for this operation
      *
@@ -106,17 +107,19 @@ class BackupStorageApi
      * @return \Everest\Model\BackupStorage|\Everest\Model\Error|\Everest\Model\Error
      */
     public function createBackupStorage(
+        mixed $namespace,
         mixed $createBackupStorageParams,
         string $contentType = self::contentTypes['createBackupStorage'][0],
     ): mixed {
-        list($response) = $this->createBackupStorageWithHttpInfo($createBackupStorageParams, $contentType);
+        list($response) = $this->createBackupStorageWithHttpInfo($namespace, $createBackupStorageParams, $contentType);
 
         return $response;
     }
 
     /**
-     * createBackupStorageWithHttpInfo: Create a new backup storage object
+     * createBackupStorageWithHttpInfo: Create backup storage
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\CreateBackupStorageParams $createBackupStorageParams The backup storage object to be created (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBackupStorage'] to see the possible values for this operation
      *
@@ -131,10 +134,11 @@ class BackupStorageApi
      * } Array of response body, status, and response headers
      */
     public function createBackupStorageWithHttpInfo(
+        mixed $namespace,
         mixed $createBackupStorageParams,
         string $contentType = self::contentTypes['createBackupStorage'][0],
     ): array {
-        $request = $this->createBackupStorageRequest($createBackupStorageParams, $contentType);
+        $request = $this->createBackupStorageRequest($namespace, $createBackupStorageParams, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -266,18 +270,20 @@ class BackupStorageApi
     }
 
     /**
-     * createBackupStorageAsync: Create a new backup storage object
+     * createBackupStorageAsync: Create backup storage
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\CreateBackupStorageParams $createBackupStorageParams The backup storage object to be created (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function createBackupStorageAsync(
+        mixed $namespace,
         mixed $createBackupStorageParams,
         string $contentType = self::contentTypes['createBackupStorage'][0],
     ): PromiseInterface {
-        return $this->createBackupStorageAsyncWithHttpInfo($createBackupStorageParams, $contentType)
+        return $this->createBackupStorageAsyncWithHttpInfo($namespace, $createBackupStorageParams, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -286,19 +292,21 @@ class BackupStorageApi
     }
 
     /**
-     * createBackupStorageAsyncWithHttpInfo: Create a new backup storage object
+     * createBackupStorageAsyncWithHttpInfo: Create backup storage
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\CreateBackupStorageParams $createBackupStorageParams The backup storage object to be created (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function createBackupStorageAsyncWithHttpInfo(
+        mixed $namespace,
         mixed $createBackupStorageParams,
         string $contentType = self::contentTypes['createBackupStorage'][0],
     ): PromiseInterface {
         $returnType = '\Everest\Model\BackupStorage';
-        $request = $this->createBackupStorageRequest($createBackupStorageParams, $contentType);
+        $request = $this->createBackupStorageRequest($namespace, $createBackupStorageParams, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -339,15 +347,24 @@ class BackupStorageApi
     /**
      * Create request for operation 'createBackupStorage'
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\CreateBackupStorageParams $createBackupStorageParams The backup storage object to be created (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function createBackupStorageRequest(
+        mixed $namespace,
         mixed $createBackupStorageParams,
         string $contentType = self::contentTypes['createBackupStorage'][0],
     ): Request {
+        // verify the required parameter 'namespace' is set
+        if ($namespace === null || (is_array($namespace) && count($namespace) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $namespace when calling createBackupStorage'
+            );
+        }
+
         // verify the required parameter 'createBackupStorageParams' is set
         if ($createBackupStorageParams === null || (is_array($createBackupStorageParams) && count($createBackupStorageParams) === 0)) {
             throw new \InvalidArgumentException(
@@ -355,12 +372,21 @@ class BackupStorageApi
             );
         }
 
-        $resourcePath = '/backup-storages';
+        $resourcePath = '/namespaces/{namespace}/backup-storages';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
+
+        // path params
+        if ($namespace !== null) {
+            $resourcePath = str_replace(
+                '{' . 'namespace' . '}',
+                ObjectSerializer::toPathValue($namespace),
+                $resourcePath
+            );
+        }
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],
@@ -400,6 +426,11 @@ class BackupStorageApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -423,9 +454,10 @@ class BackupStorageApi
     }
 
     /**
-     * deleteBackupStorage: Delete the specified backup storage
+     * deleteBackupStorage: Delete backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteBackupStorage'] to see the possible values for this operation
      *
      * @throws ApiException on non-2xx response
@@ -436,15 +468,17 @@ class BackupStorageApi
      */
     public function deleteBackupStorage(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['deleteBackupStorage'][0],
     ): void {
-        $this->deleteBackupStorageWithHttpInfo($name, $contentType);
+        $this->deleteBackupStorageWithHttpInfo($name, $namespace, $contentType);
     }
 
     /**
-     * deleteBackupStorageWithHttpInfo: Delete the specified backup storage
+     * deleteBackupStorageWithHttpInfo: Delete backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteBackupStorage'] to see the possible values for this operation
      *
      * @throws ApiException on non-2xx response
@@ -459,9 +493,10 @@ class BackupStorageApi
      */
     public function deleteBackupStorageWithHttpInfo(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['deleteBackupStorage'][0],
     ): array {
-        $request = $this->deleteBackupStorageRequest($name, $contentType);
+        $request = $this->deleteBackupStorageRequest($name, $namespace, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -523,18 +558,20 @@ class BackupStorageApi
     }
 
     /**
-     * deleteBackupStorageAsync: Delete the specified backup storage
+     * deleteBackupStorageAsync: Delete backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function deleteBackupStorageAsync(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['deleteBackupStorage'][0],
     ): PromiseInterface {
-        return $this->deleteBackupStorageAsyncWithHttpInfo($name, $contentType)
+        return $this->deleteBackupStorageAsyncWithHttpInfo($name, $namespace, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -543,19 +580,21 @@ class BackupStorageApi
     }
 
     /**
-     * deleteBackupStorageAsyncWithHttpInfo: Delete the specified backup storage
+     * deleteBackupStorageAsyncWithHttpInfo: Delete backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function deleteBackupStorageAsyncWithHttpInfo(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['deleteBackupStorage'][0],
     ): PromiseInterface {
         $returnType = '';
-        $request = $this->deleteBackupStorageRequest($name, $contentType);
+        $request = $this->deleteBackupStorageRequest($name, $namespace, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -584,12 +623,14 @@ class BackupStorageApi
      * Create request for operation 'deleteBackupStorage'
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function deleteBackupStorageRequest(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['deleteBackupStorage'][0],
     ): Request {
         // verify the required parameter 'name' is set
@@ -599,7 +640,14 @@ class BackupStorageApi
             );
         }
 
-        $resourcePath = '/backup-storages/{name}';
+        // verify the required parameter 'namespace' is set
+        if ($namespace === null || (is_array($namespace) && count($namespace) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $namespace when calling deleteBackupStorage'
+            );
+        }
+
+        $resourcePath = '/namespaces/{namespace}/backup-storages/{name}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -611,6 +659,15 @@ class BackupStorageApi
             $resourcePath = str_replace(
                 '{' . 'name' . '}',
                 ObjectSerializer::toPathValue($name),
+                $resourcePath
+            );
+        }
+
+        // path params
+        if ($namespace !== null) {
+            $resourcePath = str_replace(
+                '{' . 'namespace' . '}',
+                ObjectSerializer::toPathValue($namespace),
                 $resourcePath
             );
         }
@@ -646,6 +703,11 @@ class BackupStorageApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -669,9 +731,10 @@ class BackupStorageApi
     }
 
     /**
-     * getBackupStorage: Get the specified backup storage
+     * getBackupStorage: Get backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBackupStorage'] to see the possible values for this operation
      *
      * @throws ApiException on non-2xx response
@@ -682,17 +745,19 @@ class BackupStorageApi
      */
     public function getBackupStorage(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['getBackupStorage'][0],
     ): mixed {
-        list($response) = $this->getBackupStorageWithHttpInfo($name, $contentType);
+        list($response) = $this->getBackupStorageWithHttpInfo($name, $namespace, $contentType);
 
         return $response;
     }
 
     /**
-     * getBackupStorageWithHttpInfo: Get the specified backup storage
+     * getBackupStorageWithHttpInfo: Get backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBackupStorage'] to see the possible values for this operation
      *
      * @throws ApiException on non-2xx response
@@ -707,9 +772,10 @@ class BackupStorageApi
      */
     public function getBackupStorageWithHttpInfo(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['getBackupStorage'][0],
     ): array {
-        $request = $this->getBackupStorageRequest($name, $contentType);
+        $request = $this->getBackupStorageRequest($name, $namespace, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -841,18 +907,20 @@ class BackupStorageApi
     }
 
     /**
-     * getBackupStorageAsync: Get the specified backup storage
+     * getBackupStorageAsync: Get backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function getBackupStorageAsync(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['getBackupStorage'][0],
     ): PromiseInterface {
-        return $this->getBackupStorageAsyncWithHttpInfo($name, $contentType)
+        return $this->getBackupStorageAsyncWithHttpInfo($name, $namespace, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -861,19 +929,21 @@ class BackupStorageApi
     }
 
     /**
-     * getBackupStorageAsyncWithHttpInfo: Get the specified backup storage
+     * getBackupStorageAsyncWithHttpInfo: Get backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function getBackupStorageAsyncWithHttpInfo(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['getBackupStorage'][0],
     ): PromiseInterface {
         $returnType = '\Everest\Model\BackupStorage';
-        $request = $this->getBackupStorageRequest($name, $contentType);
+        $request = $this->getBackupStorageRequest($name, $namespace, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -915,12 +985,14 @@ class BackupStorageApi
      * Create request for operation 'getBackupStorage'
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBackupStorage'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function getBackupStorageRequest(
         mixed $name,
+        mixed $namespace,
         string $contentType = self::contentTypes['getBackupStorage'][0],
     ): Request {
         // verify the required parameter 'name' is set
@@ -930,7 +1002,14 @@ class BackupStorageApi
             );
         }
 
-        $resourcePath = '/backup-storages/{name}';
+        // verify the required parameter 'namespace' is set
+        if ($namespace === null || (is_array($namespace) && count($namespace) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $namespace when calling getBackupStorage'
+            );
+        }
+
+        $resourcePath = '/namespaces/{namespace}/backup-storages/{name}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -942,6 +1021,15 @@ class BackupStorageApi
             $resourcePath = str_replace(
                 '{' . 'name' . '}',
                 ObjectSerializer::toPathValue($name),
+                $resourcePath
+            );
+        }
+
+        // path params
+        if ($namespace !== null) {
+            $resourcePath = str_replace(
+                '{' . 'namespace' . '}',
+                ObjectSerializer::toPathValue($namespace),
                 $resourcePath
             );
         }
@@ -977,6 +1065,11 @@ class BackupStorageApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1000,8 +1093,9 @@ class BackupStorageApi
     }
 
     /**
-     * listBackupStorages: List of the created backup storages
+     * listBackupStorages: List backup storages
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBackupStorages'] to see the possible values for this operation
      *
      * @throws ApiException on non-2xx response
@@ -1011,16 +1105,18 @@ class BackupStorageApi
      * @return \Everest\Model\BackupStorage[]|\Everest\Model\Error|\Everest\Model\Error
      */
     public function listBackupStorages(
+        mixed $namespace,
         string $contentType = self::contentTypes['listBackupStorages'][0],
     ): mixed {
-        list($response) = $this->listBackupStoragesWithHttpInfo($contentType);
+        list($response) = $this->listBackupStoragesWithHttpInfo($namespace, $contentType);
 
         return $response;
     }
 
     /**
-     * listBackupStoragesWithHttpInfo: List of the created backup storages
+     * listBackupStoragesWithHttpInfo: List backup storages
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBackupStorages'] to see the possible values for this operation
      *
      * @throws ApiException on non-2xx response
@@ -1034,9 +1130,10 @@ class BackupStorageApi
      * } Array of response body, status, and response headers
      */
     public function listBackupStoragesWithHttpInfo(
+        mixed $namespace,
         string $contentType = self::contentTypes['listBackupStorages'][0],
     ): array {
-        $request = $this->listBackupStoragesRequest($contentType);
+        $request = $this->listBackupStoragesRequest($namespace, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1168,16 +1265,18 @@ class BackupStorageApi
     }
 
     /**
-     * listBackupStoragesAsync: List of the created backup storages
+     * listBackupStoragesAsync: List backup storages
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBackupStorages'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function listBackupStoragesAsync(
+        mixed $namespace,
         string $contentType = self::contentTypes['listBackupStorages'][0],
     ): PromiseInterface {
-        return $this->listBackupStoragesAsyncWithHttpInfo($contentType)
+        return $this->listBackupStoragesAsyncWithHttpInfo($namespace, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1186,17 +1285,19 @@ class BackupStorageApi
     }
 
     /**
-     * listBackupStoragesAsyncWithHttpInfo: List of the created backup storages
+     * listBackupStoragesAsyncWithHttpInfo: List backup storages
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBackupStorages'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function listBackupStoragesAsyncWithHttpInfo(
+        mixed $namespace,
         string $contentType = self::contentTypes['listBackupStorages'][0],
     ): PromiseInterface {
         $returnType = '\Everest\Model\BackupStorage[]';
-        $request = $this->listBackupStoragesRequest($contentType);
+        $request = $this->listBackupStoragesRequest($namespace, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1237,19 +1338,37 @@ class BackupStorageApi
     /**
      * Create request for operation 'listBackupStorages'
      *
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBackupStorages'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      */
     public function listBackupStoragesRequest(
+        mixed $namespace,
         string $contentType = self::contentTypes['listBackupStorages'][0],
     ): Request {
-        $resourcePath = '/backup-storages';
+        // verify the required parameter 'namespace' is set
+        if ($namespace === null || (is_array($namespace) && count($namespace) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $namespace when calling listBackupStorages'
+            );
+        }
+
+        $resourcePath = '/namespaces/{namespace}/backup-storages';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
+
+        // path params
+        if ($namespace !== null) {
+            $resourcePath = str_replace(
+                '{' . 'namespace' . '}',
+                ObjectSerializer::toPathValue($namespace),
+                $resourcePath
+            );
+        }
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],
@@ -1282,6 +1401,11 @@ class BackupStorageApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1305,9 +1429,10 @@ class BackupStorageApi
     }
 
     /**
-     * updateBackupStorage: Partial update of the specified backup storage
+     * updateBackupStorage: Update backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\UpdateBackupStorageParams $updateBackupStorageParams The backup storage params. Only the specified fields will be updated. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBackupStorage'] to see the possible values for this operation
      *
@@ -1319,18 +1444,20 @@ class BackupStorageApi
      */
     public function updateBackupStorage(
         mixed $name,
+        mixed $namespace,
         mixed $updateBackupStorageParams,
         string $contentType = self::contentTypes['updateBackupStorage'][0],
     ): mixed {
-        list($response) = $this->updateBackupStorageWithHttpInfo($name, $updateBackupStorageParams, $contentType);
+        list($response) = $this->updateBackupStorageWithHttpInfo($name, $namespace, $updateBackupStorageParams, $contentType);
 
         return $response;
     }
 
     /**
-     * updateBackupStorageWithHttpInfo: Partial update of the specified backup storage
+     * updateBackupStorageWithHttpInfo: Update backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\UpdateBackupStorageParams $updateBackupStorageParams The backup storage params. Only the specified fields will be updated. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBackupStorage'] to see the possible values for this operation
      *
@@ -1346,10 +1473,11 @@ class BackupStorageApi
      */
     public function updateBackupStorageWithHttpInfo(
         mixed $name,
+        mixed $namespace,
         mixed $updateBackupStorageParams,
         string $contentType = self::contentTypes['updateBackupStorage'][0],
     ): array {
-        $request = $this->updateBackupStorageRequest($name, $updateBackupStorageParams, $contentType);
+        $request = $this->updateBackupStorageRequest($name, $namespace, $updateBackupStorageParams, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1481,9 +1609,10 @@ class BackupStorageApi
     }
 
     /**
-     * updateBackupStorageAsync: Partial update of the specified backup storage
+     * updateBackupStorageAsync: Update backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\UpdateBackupStorageParams $updateBackupStorageParams The backup storage params. Only the specified fields will be updated. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBackupStorage'] to see the possible values for this operation
      *
@@ -1491,10 +1620,11 @@ class BackupStorageApi
      */
     public function updateBackupStorageAsync(
         mixed $name,
+        mixed $namespace,
         mixed $updateBackupStorageParams,
         string $contentType = self::contentTypes['updateBackupStorage'][0],
     ): PromiseInterface {
-        return $this->updateBackupStorageAsyncWithHttpInfo($name, $updateBackupStorageParams, $contentType)
+        return $this->updateBackupStorageAsyncWithHttpInfo($name, $namespace, $updateBackupStorageParams, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1503,9 +1633,10 @@ class BackupStorageApi
     }
 
     /**
-     * updateBackupStorageAsyncWithHttpInfo: Partial update of the specified backup storage
+     * updateBackupStorageAsyncWithHttpInfo: Update backup storage
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\UpdateBackupStorageParams $updateBackupStorageParams The backup storage params. Only the specified fields will be updated. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBackupStorage'] to see the possible values for this operation
      *
@@ -1513,11 +1644,12 @@ class BackupStorageApi
      */
     public function updateBackupStorageAsyncWithHttpInfo(
         mixed $name,
+        mixed $namespace,
         mixed $updateBackupStorageParams,
         string $contentType = self::contentTypes['updateBackupStorage'][0],
     ): PromiseInterface {
         $returnType = '\Everest\Model\BackupStorage';
-        $request = $this->updateBackupStorageRequest($name, $updateBackupStorageParams, $contentType);
+        $request = $this->updateBackupStorageRequest($name, $namespace, $updateBackupStorageParams, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1559,6 +1691,7 @@ class BackupStorageApi
      * Create request for operation 'updateBackupStorage'
      *
      * @param  string $name Name of the backup storage (required)
+     * @param  string $namespace Namespace of the backup storage (required)
      * @param  \Everest\Model\UpdateBackupStorageParams $updateBackupStorageParams The backup storage params. Only the specified fields will be updated. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBackupStorage'] to see the possible values for this operation
      *
@@ -1566,6 +1699,7 @@ class BackupStorageApi
      */
     public function updateBackupStorageRequest(
         mixed $name,
+        mixed $namespace,
         mixed $updateBackupStorageParams,
         string $contentType = self::contentTypes['updateBackupStorage'][0],
     ): Request {
@@ -1576,6 +1710,13 @@ class BackupStorageApi
             );
         }
 
+        // verify the required parameter 'namespace' is set
+        if ($namespace === null || (is_array($namespace) && count($namespace) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $namespace when calling updateBackupStorage'
+            );
+        }
+
         // verify the required parameter 'updateBackupStorageParams' is set
         if ($updateBackupStorageParams === null || (is_array($updateBackupStorageParams) && count($updateBackupStorageParams) === 0)) {
             throw new \InvalidArgumentException(
@@ -1583,7 +1724,7 @@ class BackupStorageApi
             );
         }
 
-        $resourcePath = '/backup-storages/{name}';
+        $resourcePath = '/namespaces/{namespace}/backup-storages/{name}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1595,6 +1736,15 @@ class BackupStorageApi
             $resourcePath = str_replace(
                 '{' . 'name' . '}',
                 ObjectSerializer::toPathValue($name),
+                $resourcePath
+            );
+        }
+
+        // path params
+        if ($namespace !== null) {
+            $resourcePath = str_replace(
+                '{' . 'namespace' . '}',
+                ObjectSerializer::toPathValue($namespace),
                 $resourcePath
             );
         }
@@ -1635,6 +1785,11 @@ class BackupStorageApi
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
             }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
 
         $defaultHeaders = [];

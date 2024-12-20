@@ -42,6 +42,7 @@ class DatabaseClusterSpecProxy implements ModelInterface, \ArrayAccess, \JsonSer
       * @var array<string, string>
       */
     protected static array $openAPITypes = [
+        'affinity' => '\Everest\Model\DatabaseClusterSpecEngineAffinity',
         'config' => 'string',
         'expose' => '\Everest\Model\DatabaseClusterSpecProxyExpose',
         'replicas' => 'int',
@@ -55,6 +56,7 @@ class DatabaseClusterSpecProxy implements ModelInterface, \ArrayAccess, \JsonSer
       * @var array<string, null|string>
       */
     protected static array $openAPIFormats = [
+        'affinity' => null,
         'config' => null,
         'expose' => null,
         'replicas' => 'int32',
@@ -68,6 +70,7 @@ class DatabaseClusterSpecProxy implements ModelInterface, \ArrayAccess, \JsonSer
       * @var array<string, bool>
       */
     protected static array $openAPINullables = [
+        'affinity' => false,
         'config' => false,
         'expose' => false,
         'replicas' => false,
@@ -155,6 +158,7 @@ class DatabaseClusterSpecProxy implements ModelInterface, \ArrayAccess, \JsonSer
      * @var array<string, string>
      */
     protected static array $attributeMap = [
+        'affinity' => 'affinity',
         'config' => 'config',
         'expose' => 'expose',
         'replicas' => 'replicas',
@@ -168,6 +172,7 @@ class DatabaseClusterSpecProxy implements ModelInterface, \ArrayAccess, \JsonSer
      * @var array<string, string>
      */
     protected static array $setters = [
+        'affinity' => 'setAffinity',
         'config' => 'setConfig',
         'expose' => 'setExpose',
         'replicas' => 'setReplicas',
@@ -181,6 +186,7 @@ class DatabaseClusterSpecProxy implements ModelInterface, \ArrayAccess, \JsonSer
      * @var array<string, string>
      */
     protected static array $getters = [
+        'affinity' => 'getAffinity',
         'config' => 'getConfig',
         'expose' => 'getExpose',
         'replicas' => 'getReplicas',
@@ -263,6 +269,7 @@ class DatabaseClusterSpecProxy implements ModelInterface, \ArrayAccess, \JsonSer
      */
     public function __construct(array $data = null)
     {
+        $this->setIfExists('affinity', $data ?? [], null);
         $this->setIfExists('config', $data ?? [], null);
         $this->setIfExists('expose', $data ?? [], null);
         $this->setIfExists('replicas', $data ?? [], null);
@@ -322,6 +329,31 @@ class DatabaseClusterSpecProxy implements ModelInterface, \ArrayAccess, \JsonSer
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets affinity
+     *
+     * @return null|\Everest\Model\DatabaseClusterSpecEngineAffinity
+     */
+    public function getAffinity(): mixed
+    {
+        return $this->container['affinity'];
+    }
+
+    /**
+     * Sets affinity
+     *
+     * @param null|\Everest\Model\DatabaseClusterSpecEngineAffinity $affinity affinity
+     */
+    public function setAffinity(mixed $affinity): static
+    {
+        if (is_null($affinity)) {
+            throw new \InvalidArgumentException('non-nullable affinity cannot be null');
+        }
+        $this->container['affinity'] = $affinity;
+
+        return $this;
+    }
 
     /**
      * Gets config

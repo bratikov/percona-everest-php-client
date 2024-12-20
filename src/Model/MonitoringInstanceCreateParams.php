@@ -47,6 +47,7 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => 'string[]',
         'verifyTLS' => 'bool',
         'name' => 'string',
+        'namespace' => 'string',
         'pmm' => '\Everest\Model\MonitoringInstancePMMPmm',
     ];
 
@@ -61,6 +62,7 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => null,
         'verifyTLS' => null,
         'name' => null,
+        'namespace' => null,
         'pmm' => null,
     ];
 
@@ -75,6 +77,7 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => false,
         'verifyTLS' => false,
         'name' => false,
+        'namespace' => false,
         'pmm' => false,
     ];
 
@@ -163,6 +166,7 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => 'allowedNamespaces',
         'verifyTLS' => 'verifyTLS',
         'name' => 'name',
+        'namespace' => 'namespace',
         'pmm' => 'pmm',
     ];
 
@@ -177,6 +181,7 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => 'setAllowedNamespaces',
         'verifyTLS' => 'setVerifyTLS',
         'name' => 'setName',
+        'namespace' => 'setNamespace',
         'pmm' => 'setPmm',
     ];
 
@@ -191,6 +196,7 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
         'allowedNamespaces' => 'getAllowedNamespaces',
         'verifyTLS' => 'getVerifyTLS',
         'name' => 'getName',
+        'namespace' => 'getNamespace',
         'pmm' => 'getPmm',
     ];
 
@@ -268,6 +274,7 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
         $this->setIfExists('allowedNamespaces', $data ?? [], null);
         $this->setIfExists('verifyTLS', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('namespace', $data ?? [], null);
         $this->setIfExists('pmm', $data ?? [], null);
     }
 
@@ -315,9 +322,6 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
             $invalidProperties[] = "invalid value for 'url', the character length must be bigger than or equal to 1.";
         }
 
-        if ($this->container['allowedNamespaces'] === null) {
-            $invalidProperties[] = "'allowedNamespaces' can't be null";
-        }
         if ($this->container['name'] === null) {
             $invalidProperties[] = "'name' can't be null";
         }
@@ -406,7 +410,9 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
     /**
      * Gets allowedNamespaces
      *
-     * @return string[]
+     * @return null|string[]
+     *
+     * @deprecated
      */
     public function getAllowedNamespaces(): mixed
     {
@@ -416,7 +422,9 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
     /**
      * Sets allowedNamespaces
      *
-     * @param string[] $allowedNamespaces List of namespaces allowed to use this monitoring instance
+     * @param null|string[] $allowedNamespaces List of namespaces allowed to use this monitoring instance
+     *
+     * @deprecated
      */
     public function setAllowedNamespaces(mixed $allowedNamespaces): static
     {
@@ -477,6 +485,31 @@ class MonitoringInstanceCreateParams implements ModelInterface, \ArrayAccess, \J
             throw new \InvalidArgumentException('invalid length for $name when calling MonitoringInstanceCreateParams., must be bigger than or equal to 1.');
         }
         $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets namespace
+     *
+     * @return null|string
+     */
+    public function getNamespace(): mixed
+    {
+        return $this->container['namespace'];
+    }
+
+    /**
+     * Sets namespace
+     *
+     * @param null|string $namespace namespace
+     */
+    public function setNamespace(mixed $namespace): static
+    {
+        if (is_null($namespace)) {
+            throw new \InvalidArgumentException('non-nullable namespace cannot be null');
+        }
+        $this->container['namespace'] = $namespace;
 
         return $this;
     }

@@ -49,6 +49,9 @@ class DatabaseClusterApi
         'getDatabaseCluster' => [
             'application/json',
         ],
+        'getDatabaseClusterComponents' => [
+            'application/json',
+        ],
         'getDatabaseClusterCredentials' => [
             'application/json',
         ],
@@ -100,7 +103,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * createDatabaseCluster: Create a database cluster
+     * createDatabaseCluster: Create database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  \Everest\Model\DatabaseCluster $databaseCluster The database cluster object to be created (required)
@@ -123,7 +126,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * createDatabaseClusterWithHttpInfo: Create a database cluster
+     * createDatabaseClusterWithHttpInfo: Create database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  \Everest\Model\DatabaseCluster $databaseCluster The database cluster object to be created (required)
@@ -322,7 +325,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * createDatabaseClusterAsync: Create a database cluster
+     * createDatabaseClusterAsync: Create database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  \Everest\Model\DatabaseCluster $databaseCluster The database cluster object to be created (required)
@@ -344,7 +347,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * createDatabaseClusterAsyncWithHttpInfo: Create a database cluster
+     * createDatabaseClusterAsyncWithHttpInfo: Create database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  \Everest\Model\DatabaseCluster $databaseCluster The database cluster object to be created (required)
@@ -478,6 +481,11 @@ class DatabaseClusterApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -501,7 +509,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * deleteDatabaseCluster: Delete the specified database cluster
+     * deleteDatabaseCluster: Delete database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -526,7 +534,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * deleteDatabaseClusterWithHttpInfo: Delete the specified database cluster
+     * deleteDatabaseClusterWithHttpInfo: Delete database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -681,7 +689,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * deleteDatabaseClusterAsync: Delete the specified database cluster
+     * deleteDatabaseClusterAsync: Delete database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -705,7 +713,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * deleteDatabaseClusterAsyncWithHttpInfo: Delete the specified database cluster
+     * deleteDatabaseClusterAsyncWithHttpInfo: Delete database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -856,6 +864,11 @@ class DatabaseClusterApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -879,7 +892,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseCluster: Get the specified database cluster
+     * getDatabaseCluster: Get database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -902,7 +915,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterWithHttpInfo: Get the specified database cluster
+     * getDatabaseClusterWithHttpInfo: Get database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1055,7 +1068,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterAsync: Get the specified database cluster
+     * getDatabaseClusterAsync: Get database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1077,7 +1090,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterAsyncWithHttpInfo: Get the specified database cluster
+     * getDatabaseClusterAsyncWithHttpInfo: Get database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1213,6 +1226,11 @@ class DatabaseClusterApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1236,7 +1254,369 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterCredentials: Get the specified database cluster credentials
+     * getDatabaseClusterComponents: Get database cluster components
+     *
+     * @param  string $namespace Name of the namespace (required)
+     * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDatabaseClusterComponents'] to see the possible values for this operation
+     *
+     * @throws ApiException on non-2xx response
+     * @throws GuzzleException
+     * @throws \InvalidArgumentException
+     *
+     * @return \Everest\Model\DatabaseClusterComponentsInner[]|\Everest\Model\Error|\Everest\Model\Error
+     */
+    public function getDatabaseClusterComponents(
+        mixed $namespace,
+        mixed $name,
+        string $contentType = self::contentTypes['getDatabaseClusterComponents'][0],
+    ): mixed {
+        list($response) = $this->getDatabaseClusterComponentsWithHttpInfo($namespace, $name, $contentType);
+
+        return $response;
+    }
+
+    /**
+     * getDatabaseClusterComponentsWithHttpInfo: Get database cluster components
+     *
+     * @param  string $namespace Name of the namespace (required)
+     * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDatabaseClusterComponents'] to see the possible values for this operation
+     *
+     * @throws ApiException on non-2xx response
+     * @throws GuzzleException
+     * @throws \InvalidArgumentException
+     *
+     * @return array{
+     *     \Everest\Model\DatabaseClusterComponentsInner[]|\Everest\Model\Error|\Everest\Model\Error,
+     *     int,
+     *     list<string>,
+     * } Array of response body, status, and response headers
+     */
+    public function getDatabaseClusterComponentsWithHttpInfo(
+        mixed $namespace,
+        mixed $name,
+        string $contentType = self::contentTypes['getDatabaseClusterComponents'][0],
+    ): array {
+        $request = $this->getDatabaseClusterComponentsRequest($namespace, $name, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            switch($statusCode) {
+                case 200:
+                    if ('\Everest\Model\DatabaseClusterComponentsInner[]' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ('\Everest\Model\DatabaseClusterComponentsInner[]' !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Everest\Model\DatabaseClusterComponentsInner[]', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 400:
+                    if ('\Everest\Model\Error' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ('\Everest\Model\Error' !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Everest\Model\Error', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 500:
+                    if ('\Everest\Model\Error' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ('\Everest\Model\Error' !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Everest\Model\Error', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\Everest\Model\DatabaseClusterComponentsInner[]';
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Everest\Model\DatabaseClusterComponentsInner[]',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Everest\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Everest\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * getDatabaseClusterComponentsAsync: Get database cluster components
+     *
+     * @param  string $namespace Name of the namespace (required)
+     * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDatabaseClusterComponents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getDatabaseClusterComponentsAsync(
+        mixed $namespace,
+        mixed $name,
+        string $contentType = self::contentTypes['getDatabaseClusterComponents'][0],
+    ): PromiseInterface {
+        return $this->getDatabaseClusterComponentsAsyncWithHttpInfo($namespace, $name, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * getDatabaseClusterComponentsAsyncWithHttpInfo: Get database cluster components
+     *
+     * @param  string $namespace Name of the namespace (required)
+     * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDatabaseClusterComponents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getDatabaseClusterComponentsAsyncWithHttpInfo(
+        mixed $namespace,
+        mixed $name,
+        string $contentType = self::contentTypes['getDatabaseClusterComponents'][0],
+    ): PromiseInterface {
+        $returnType = '\Everest\Model\DatabaseClusterComponentsInner[]';
+        $request = $this->getDatabaseClusterComponentsRequest($namespace, $name, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getDatabaseClusterComponents'
+     *
+     * @param  string $namespace Name of the namespace (required)
+     * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDatabaseClusterComponents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getDatabaseClusterComponentsRequest(
+        mixed $namespace,
+        mixed $name,
+        string $contentType = self::contentTypes['getDatabaseClusterComponents'][0],
+    ): Request {
+        // verify the required parameter 'namespace' is set
+        if ($namespace === null || (is_array($namespace) && count($namespace) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $namespace when calling getDatabaseClusterComponents'
+            );
+        }
+
+        // verify the required parameter 'name' is set
+        if ($name === null || (is_array($name) && count($name) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $name when calling getDatabaseClusterComponents'
+            );
+        }
+
+        $resourcePath = '/namespaces/{namespace}/database-clusters/{name}/components';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // path params
+        if ($namespace !== null) {
+            $resourcePath = str_replace(
+                '{' . 'namespace' . '}',
+                ObjectSerializer::toPathValue($namespace),
+                $resourcePath
+            );
+        }
+
+        // path params
+        if ($name !== null) {
+            $resourcePath = str_replace(
+                '{' . 'name' . '}',
+                ObjectSerializer::toPathValue($name),
+                $resourcePath
+            );
+        }
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * getDatabaseClusterCredentials: Get database cluster credentials
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1259,7 +1639,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterCredentialsWithHttpInfo: Get the specified database cluster credentials
+     * getDatabaseClusterCredentialsWithHttpInfo: Get database cluster credentials
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1412,7 +1792,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterCredentialsAsync: Get the specified database cluster credentials
+     * getDatabaseClusterCredentialsAsync: Get database cluster credentials
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1434,7 +1814,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterCredentialsAsyncWithHttpInfo: Get the specified database cluster credentials
+     * getDatabaseClusterCredentialsAsyncWithHttpInfo: Get database cluster credentials
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1570,6 +1950,11 @@ class DatabaseClusterApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1593,7 +1978,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterPitr: Get the Point-in-Time related data for the specified database cluster
+     * getDatabaseClusterPitr: Get the Point-in-Time recovery info
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1616,7 +2001,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterPitrWithHttpInfo: Get the Point-in-Time related data for the specified database cluster
+     * getDatabaseClusterPitrWithHttpInfo: Get the Point-in-Time recovery info
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1769,7 +2154,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterPitrAsync: Get the Point-in-Time related data for the specified database cluster
+     * getDatabaseClusterPitrAsync: Get the Point-in-Time recovery info
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1791,7 +2176,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * getDatabaseClusterPitrAsyncWithHttpInfo: Get the Point-in-Time related data for the specified database cluster
+     * getDatabaseClusterPitrAsyncWithHttpInfo: Get the Point-in-Time recovery info
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -1927,6 +2312,11 @@ class DatabaseClusterApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1950,7 +2340,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * listDatabaseClusters: List of the created database clusters
+     * listDatabaseClusters: List database clusters
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDatabaseClusters'] to see the possible values for this operation
@@ -1971,7 +2361,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * listDatabaseClustersWithHttpInfo: List of the created database clusters
+     * listDatabaseClustersWithHttpInfo: List database clusters
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDatabaseClusters'] to see the possible values for this operation
@@ -2122,7 +2512,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * listDatabaseClustersAsync: List of the created database clusters
+     * listDatabaseClustersAsync: List database clusters
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDatabaseClusters'] to see the possible values for this operation
@@ -2142,7 +2532,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * listDatabaseClustersAsyncWithHttpInfo: List of the created database clusters
+     * listDatabaseClustersAsyncWithHttpInfo: List database clusters
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDatabaseClusters'] to see the possible values for this operation
@@ -2258,6 +2648,11 @@ class DatabaseClusterApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2281,7 +2676,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * updateDatabaseCluster: Replace the specified database cluster
+     * updateDatabaseCluster: Update database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -2306,7 +2701,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * updateDatabaseClusterWithHttpInfo: Replace the specified database cluster
+     * updateDatabaseClusterWithHttpInfo: Update database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -2461,7 +2856,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * updateDatabaseClusterAsync: Replace the specified database cluster
+     * updateDatabaseClusterAsync: Update database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -2485,7 +2880,7 @@ class DatabaseClusterApi
     }
 
     /**
-     * updateDatabaseClusterAsyncWithHttpInfo: Replace the specified database cluster
+     * updateDatabaseClusterAsyncWithHttpInfo: Update database cluster
      *
      * @param  string $namespace Name of the namespace (required)
      * @param  string $name Name of the database cluster. Can be found under Metadata[\&quot;name\&quot;] of the DatabaseCluster object. (required)
@@ -2637,6 +3032,11 @@ class DatabaseClusterApi
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
             }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
 
         $defaultHeaders = [];

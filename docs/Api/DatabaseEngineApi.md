@@ -4,9 +4,9 @@ All URIs are relative to /v1, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**getDatabaseEngine()**](DatabaseEngineApi.md#getDatabaseEngine) | **GET** /namespaces/{namespace}/database-engines/{name} | Get the specified database engine |
-| [**listDatabaseEngines()**](DatabaseEngineApi.md#listDatabaseEngines) | **GET** /namespaces/{namespace}/database-engines | List of the available database engines |
-| [**updateDatabaseEngine()**](DatabaseEngineApi.md#updateDatabaseEngine) | **PUT** /namespaces/{namespace}/database-engines/{name} | Update the specified database engine |
+| [**getDatabaseEngine()**](DatabaseEngineApi.md#getDatabaseEngine) | **GET** /namespaces/{namespace}/database-engines/{name} | Get database engine |
+| [**listDatabaseEngines()**](DatabaseEngineApi.md#listDatabaseEngines) | **GET** /namespaces/{namespace}/database-engines | List database engines |
+| [**updateDatabaseEngine()**](DatabaseEngineApi.md#updateDatabaseEngine) | **PUT** /namespaces/{namespace}/database-engines/{name} | Update database engine |
 
 
 ## `getDatabaseEngine()`
@@ -15,9 +15,9 @@ All URIs are relative to /v1, except if the operation defines another base path.
 getDatabaseEngine($namespace, $name): \Everest\Model\DatabaseEngine
 ```
 
-Get the specified database engine
+Get database engine
 
-Get the specified database engine
+This API gets the database engine specified by the `name` and `namespace`.
 
 ### Example
 
@@ -26,11 +26,15 @@ Get the specified database engine
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseEngineApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 $name = 'name_example'; // string | Name of the database engine
@@ -56,7 +60,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -73,9 +77,9 @@ No authorization required
 listDatabaseEngines($namespace): \Everest\Model\DatabaseEngineList
 ```
 
-List of the available database engines
+List database engines
 
-List of available database engines
+This API lists all database engines in the specified `namespace`.
 
 ### Example
 
@@ -84,11 +88,15 @@ List of available database engines
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseEngineApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 
@@ -112,7 +120,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -129,9 +137,9 @@ No authorization required
 updateDatabaseEngine($namespace, $name, $databaseEngine): \Everest\Model\DatabaseEngine
 ```
 
-Update the specified database engine
+Update database engine
 
-Update the specified database engine
+This API updates the database engine specified by the `name` and `namespace`.
 
 ### Example
 
@@ -140,11 +148,15 @@ Update the specified database engine
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: BearerAuth
+$config = Everest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Everest\Api\DatabaseEngineApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $namespace = 'namespace_example'; // string | Name of the namespace
 $name = 'name_example'; // string | Name of the database engine
@@ -172,7 +184,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 

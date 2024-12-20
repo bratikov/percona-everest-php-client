@@ -42,7 +42,7 @@ class DatabaseClusterRestoreSpecDataSource implements ModelInterface, \ArrayAcce
       * @var array<string, string>
       */
     protected static array $openAPITypes = [
-        'backupSource' => '\Everest\Model\DatabaseClusterSpecDataSourceBackupSource',
+        'backupSource' => '\Everest\Model\DatabaseClusterRestoreSpecDataSourceBackupSource',
         'dbClusterBackupName' => 'string',
         'pitr' => '\Everest\Model\DatabaseClusterSpecDataSourcePitr',
     ];
@@ -280,7 +280,7 @@ class DatabaseClusterRestoreSpecDataSource implements ModelInterface, \ArrayAcce
     /**
      * Gets backupSource
      *
-     * @return null|\Everest\Model\DatabaseClusterSpecDataSourceBackupSource
+     * @return null|\Everest\Model\DatabaseClusterRestoreSpecDataSourceBackupSource
      */
     public function getBackupSource(): mixed
     {
@@ -290,7 +290,7 @@ class DatabaseClusterRestoreSpecDataSource implements ModelInterface, \ArrayAcce
     /**
      * Sets backupSource
      *
-     * @param null|\Everest\Model\DatabaseClusterSpecDataSourceBackupSource $backupSource backupSource
+     * @param null|\Everest\Model\DatabaseClusterRestoreSpecDataSourceBackupSource $backupSource backupSource
      */
     public function setBackupSource(mixed $backupSource): static
     {

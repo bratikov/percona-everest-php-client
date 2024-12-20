@@ -49,6 +49,7 @@ class DatabaseClusterSpec implements ModelInterface, \ArrayAccess, \JsonSerializ
         'monitoring' => '\Everest\Model\DatabaseClusterSpecMonitoring',
         'paused' => 'bool',
         'proxy' => '\Everest\Model\DatabaseClusterSpecProxy',
+        'sharding' => '\Everest\Model\DatabaseClusterSpecSharding',
     ];
 
     /**
@@ -64,6 +65,7 @@ class DatabaseClusterSpec implements ModelInterface, \ArrayAccess, \JsonSerializ
         'monitoring' => null,
         'paused' => null,
         'proxy' => null,
+        'sharding' => null,
     ];
 
     /**
@@ -79,6 +81,7 @@ class DatabaseClusterSpec implements ModelInterface, \ArrayAccess, \JsonSerializ
         'monitoring' => false,
         'paused' => false,
         'proxy' => false,
+        'sharding' => false,
     ];
 
     /**
@@ -168,6 +171,7 @@ class DatabaseClusterSpec implements ModelInterface, \ArrayAccess, \JsonSerializ
         'monitoring' => 'monitoring',
         'paused' => 'paused',
         'proxy' => 'proxy',
+        'sharding' => 'sharding',
     ];
 
     /**
@@ -183,6 +187,7 @@ class DatabaseClusterSpec implements ModelInterface, \ArrayAccess, \JsonSerializ
         'monitoring' => 'setMonitoring',
         'paused' => 'setPaused',
         'proxy' => 'setProxy',
+        'sharding' => 'setSharding',
     ];
 
     /**
@@ -198,6 +203,7 @@ class DatabaseClusterSpec implements ModelInterface, \ArrayAccess, \JsonSerializ
         'monitoring' => 'getMonitoring',
         'paused' => 'getPaused',
         'proxy' => 'getProxy',
+        'sharding' => 'getSharding',
     ];
 
     /**
@@ -263,6 +269,7 @@ class DatabaseClusterSpec implements ModelInterface, \ArrayAccess, \JsonSerializ
         $this->setIfExists('monitoring', $data ?? [], null);
         $this->setIfExists('paused', $data ?? [], null);
         $this->setIfExists('proxy', $data ?? [], null);
+        $this->setIfExists('sharding', $data ?? [], null);
     }
 
     /**
@@ -479,6 +486,31 @@ class DatabaseClusterSpec implements ModelInterface, \ArrayAccess, \JsonSerializ
             throw new \InvalidArgumentException('non-nullable proxy cannot be null');
         }
         $this->container['proxy'] = $proxy;
+
+        return $this;
+    }
+
+    /**
+     * Gets sharding
+     *
+     * @return null|\Everest\Model\DatabaseClusterSpecSharding
+     */
+    public function getSharding(): mixed
+    {
+        return $this->container['sharding'];
+    }
+
+    /**
+     * Sets sharding
+     *
+     * @param null|\Everest\Model\DatabaseClusterSpecSharding $sharding sharding
+     */
+    public function setSharding(mixed $sharding): static
+    {
+        if (is_null($sharding)) {
+            throw new \InvalidArgumentException('non-nullable sharding cannot be null');
+        }
+        $this->container['sharding'] = $sharding;
 
         return $this;
     }

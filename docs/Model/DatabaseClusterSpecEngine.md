@@ -4,7 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**affinity** | [**\Everest\Model\DatabaseClusterSpecEngineAffinity**](DatabaseClusterSpecEngineAffinity.md) |  | [optional]
 **config** | **string** | Config is the engine configuration | [optional]
+**crVersion** | **string** | CRVersion is the desired version of the CR to use with the underlying operator. If unspecified, everest-operator will use the same version as the operator.  NOTE: Updating this property post installation may lead to a restart of the cluster. | [optional]
 **replicas** | **int** | Replicas is the number of engine replicas | [optional]
 **resources** | [**\Everest\Model\DatabaseClusterSpecEngineResources**](DatabaseClusterSpecEngineResources.md) |  | [optional]
 **storage** | [**\Everest\Model\DatabaseClusterSpecEngineStorage**](DatabaseClusterSpecEngineStorage.md) |  |

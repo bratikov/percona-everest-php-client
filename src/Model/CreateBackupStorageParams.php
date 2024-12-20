@@ -357,9 +357,6 @@ class CreateBackupStorageParams implements ModelInterface, \ArrayAccess, \JsonSe
         if ($this->container['secretKey'] === null) {
             $invalidProperties[] = "'secretKey' can't be null";
         }
-        if ($this->container['allowedNamespaces'] === null) {
-            $invalidProperties[] = "'allowedNamespaces' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -588,7 +585,9 @@ class CreateBackupStorageParams implements ModelInterface, \ArrayAccess, \JsonSe
     /**
      * Gets allowedNamespaces
      *
-     * @return string[]
+     * @return null|string[]
+     *
+     * @deprecated
      */
     public function getAllowedNamespaces(): mixed
     {
@@ -598,7 +597,9 @@ class CreateBackupStorageParams implements ModelInterface, \ArrayAccess, \JsonSe
     /**
      * Sets allowedNamespaces
      *
-     * @param string[] $allowedNamespaces List of namespaces allowed to use this backup storage
+     * @param null|string[] $allowedNamespaces List of namespaces allowed to use this backup storage
+     *
+     * @deprecated
      */
     public function setAllowedNamespaces(mixed $allowedNamespaces): static
     {

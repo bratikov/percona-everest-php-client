@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**backupStorageName** | **string** | BackupStorageName is the name of the BackupStorage CR that defines the storage location |
+**backupStorageName** | **string** | BackupStorageName is the name of the BackupStorage CR that defines the storage location. The BackupStorage must be created in the same namespace as the DatabaseCluster. |
 **enabled** | **bool** | Enabled is a flag to enable the schedule |
 **name** | **string** | Name is the name of the schedule |
 **retentionCopies** | **int** | RetentionCopies is the number of backup copies to retain | [optional]
