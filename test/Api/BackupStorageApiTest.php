@@ -74,7 +74,7 @@ class BackupStorageApiTest extends TestCase
     /**
      * Test case for createBackupStorage
      *
-     * Create a new backup storage object.
+     * Create backup storage.
      *
      */
     public function testCreateBackupStorage()
@@ -86,7 +86,7 @@ class BackupStorageApiTest extends TestCase
     /**
      * Test case for deleteBackupStorage
      *
-     * Delete the specified backup storage.
+     * Delete backup storage.
      *
      */
     public function testDeleteBackupStorage()
@@ -98,7 +98,7 @@ class BackupStorageApiTest extends TestCase
     /**
      * Test case for getBackupStorage
      *
-     * Get the specified backup storage.
+     * Get backup storage.
      *
      */
     public function testGetBackupStorage()
@@ -110,7 +110,7 @@ class BackupStorageApiTest extends TestCase
     /**
      * Test case for listBackupStorages
      *
-     * List of the created backup storages.
+     * List backup storages.
      *
      */
     public function testListBackupStorages()
@@ -122,7 +122,7 @@ class BackupStorageApiTest extends TestCase
     /**
      * Test case for updateBackupStorage
      *
-     * Partial update of the specified backup storage.
+     * Update backup storage.
      *
      */
     public function testUpdateBackupStorage()

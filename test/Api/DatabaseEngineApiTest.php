@@ -74,7 +74,7 @@ class DatabaseEngineApiTest extends TestCase
     /**
      * Test case for getDatabaseEngine
      *
-     * Get the specified database engine.
+     * Get database engine.
      *
      */
     public function testGetDatabaseEngine()
@@ -86,7 +86,7 @@ class DatabaseEngineApiTest extends TestCase
     /**
      * Test case for listDatabaseEngines
      *
-     * List of the available database engines.
+     * List database engines.
      *
      */
     public function testListDatabaseEngines()
@@ -98,7 +98,7 @@ class DatabaseEngineApiTest extends TestCase
     /**
      * Test case for updateDatabaseEngine
      *
-     * Update the specified database engine.
+     * Update database engine.
      *
      */
     public function testUpdateDatabaseEngine()

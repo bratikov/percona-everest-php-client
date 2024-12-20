@@ -80,6 +80,15 @@ class DatabaseClusterSpecProxyTest extends TestCase
     }
 
     /**
+     * Test attribute "affinity"
+     */
+    public function testPropertyAffinity()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "config"
      */
     public function testPropertyConfig()

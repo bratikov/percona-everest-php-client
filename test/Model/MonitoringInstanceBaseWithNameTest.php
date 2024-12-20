@@ -123,4 +123,13 @@ class MonitoringInstanceBaseWithNameTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "namespace"
+     */
+    public function testPropertyNamespace()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

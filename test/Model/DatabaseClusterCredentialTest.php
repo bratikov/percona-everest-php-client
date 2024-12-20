@@ -80,6 +80,15 @@ class DatabaseClusterCredentialTest extends TestCase
     }
 
     /**
+     * Test attribute "connectionUrl"
+     */
+    public function testPropertyConnectionUrl()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "username"
      */
     public function testPropertyUsername()

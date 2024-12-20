@@ -141,4 +141,13 @@ class DatabaseClusterSpecTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "sharding"
+     */
+    public function testPropertySharding()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

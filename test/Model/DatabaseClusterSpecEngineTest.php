@@ -80,9 +80,27 @@ class DatabaseClusterSpecEngineTest extends TestCase
     }
 
     /**
+     * Test attribute "affinity"
+     */
+    public function testPropertyAffinity()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "config"
      */
     public function testPropertyConfig()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "crVersion"
+     */
+    public function testPropertyCrVersion()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

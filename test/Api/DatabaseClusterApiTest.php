@@ -74,7 +74,7 @@ class DatabaseClusterApiTest extends TestCase
     /**
      * Test case for createDatabaseCluster
      *
-     * Create a database cluster.
+     * Create database cluster.
      *
      */
     public function testCreateDatabaseCluster()
@@ -86,7 +86,7 @@ class DatabaseClusterApiTest extends TestCase
     /**
      * Test case for deleteDatabaseCluster
      *
-     * Delete the specified database cluster.
+     * Delete database cluster.
      *
      */
     public function testDeleteDatabaseCluster()
@@ -98,7 +98,7 @@ class DatabaseClusterApiTest extends TestCase
     /**
      * Test case for getDatabaseCluster
      *
-     * Get the specified database cluster.
+     * Get database cluster.
      *
      */
     public function testGetDatabaseCluster()
@@ -108,9 +108,21 @@ class DatabaseClusterApiTest extends TestCase
     }
 
     /**
+     * Test case for getDatabaseClusterComponents
+     *
+     * Get database cluster components.
+     *
+     */
+    public function testGetDatabaseClusterComponents()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test case for getDatabaseClusterCredentials
      *
-     * Get the specified database cluster credentials.
+     * Get database cluster credentials.
      *
      */
     public function testGetDatabaseClusterCredentials()
@@ -122,7 +134,7 @@ class DatabaseClusterApiTest extends TestCase
     /**
      * Test case for getDatabaseClusterPitr
      *
-     * Get the Point-in-Time related data for the specified database cluster.
+     * Get the Point-in-Time recovery info.
      *
      */
     public function testGetDatabaseClusterPitr()
@@ -134,7 +146,7 @@ class DatabaseClusterApiTest extends TestCase
     /**
      * Test case for listDatabaseClusters
      *
-     * List of the created database clusters.
+     * List database clusters.
      *
      */
     public function testListDatabaseClusters()
@@ -146,7 +158,7 @@ class DatabaseClusterApiTest extends TestCase
     /**
      * Test case for updateDatabaseCluster
      *
-     * Replace the specified database cluster.
+     * Update database cluster.
      *
      */
     public function testUpdateDatabaseCluster()

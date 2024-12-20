@@ -116,6 +116,15 @@ class DatabaseClusterBackupStatusTest extends TestCase
     }
 
     /**
+     * Test attribute "latestRestorableTime"
+     */
+    public function testPropertyLatestRestorableTime()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "state"
      */
     public function testPropertyState()

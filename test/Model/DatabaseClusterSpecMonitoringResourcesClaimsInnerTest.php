@@ -87,4 +87,13 @@ class DatabaseClusterSpecMonitoringResourcesClaimsInnerTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "request"
+     */
+    public function testPropertyRequest()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

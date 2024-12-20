@@ -125,6 +125,15 @@ class MonitoringInstanceCreateParamsTest extends TestCase
     }
 
     /**
+     * Test attribute "namespace"
+     */
+    public function testPropertyNamespace()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "pmm"
      */
     public function testPropertyPmm()

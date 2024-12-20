@@ -89,6 +89,15 @@ class BackupStorageTest extends TestCase
     }
 
     /**
+     * Test attribute "namespace"
+     */
+    public function testPropertyNamespace()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "name"
      */
     public function testPropertyName()

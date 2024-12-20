@@ -89,6 +89,24 @@ class DatabaseClusterStatusTest extends TestCase
     }
 
     /**
+     * Test attribute "crVersion"
+     */
+    public function testPropertyCrVersion()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "details"
+     */
+    public function testPropertyDetails()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "hostname"
      */
     public function testPropertyHostname()
@@ -107,6 +125,15 @@ class DatabaseClusterStatusTest extends TestCase
     }
 
     /**
+     * Test attribute "observedGeneration"
+     */
+    public function testPropertyObservedGeneration()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "port"
      */
     public function testPropertyPort()
@@ -119,6 +146,15 @@ class DatabaseClusterStatusTest extends TestCase
      * Test attribute "ready"
      */
     public function testPropertyReady()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "recommendedCRVersion"
+     */
+    public function testPropertyRecommendedCRVersion()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

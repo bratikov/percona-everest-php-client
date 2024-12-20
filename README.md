@@ -27,7 +27,7 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
     }
   ],
   "require": {
-    "percona/everest": "latest"
+    "percona/everest": "dev-latest"
   }
 }
 ```
