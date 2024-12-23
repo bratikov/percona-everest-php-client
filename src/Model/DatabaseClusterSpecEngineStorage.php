@@ -43,7 +43,7 @@ class DatabaseClusterSpecEngineStorage implements ModelInterface, \ArrayAccess, 
       */
     protected static array $openAPITypes = [
         'class' => 'string',
-        'size' => '\Everest\Model\DatabaseClusterSpecEngineStorageSize',
+        'size' => 'string',
     ];
 
     /**
@@ -258,6 +258,10 @@ class DatabaseClusterSpecEngineStorage implements ModelInterface, \ArrayAccess, 
         if ($this->container['size'] === null) {
             $invalidProperties[] = "'size' can't be null";
         }
+        if (!preg_match("/^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/", $this->container['size'])) {
+            $invalidProperties[] = "invalid value for 'size', must be conform to the pattern /^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/.";
+        }
+
         return $invalidProperties;
     }
 
@@ -301,7 +305,7 @@ class DatabaseClusterSpecEngineStorage implements ModelInterface, \ArrayAccess, 
     /**
      * Gets size
      *
-     * @return \Everest\Model\DatabaseClusterSpecEngineStorageSize
+     * @return string
      */
     public function getSize(): mixed
     {
@@ -311,12 +315,15 @@ class DatabaseClusterSpecEngineStorage implements ModelInterface, \ArrayAccess, 
     /**
      * Sets size
      *
-     * @param \Everest\Model\DatabaseClusterSpecEngineStorageSize $size size
+     * @param string $size Size is the size of the persistent volume claim
      */
     public function setSize(mixed $size): static
     {
         if (is_null($size)) {
             throw new \InvalidArgumentException('non-nullable size cannot be null');
+        }
+        if (is_string($size) && (!preg_match("/^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/", $size))) {
+            throw new \InvalidArgumentException("invalid value for \$size when calling DatabaseClusterSpecEngineStorage., must conform to the pattern /^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/.");
         }
         $this->container['size'] = $size;
 

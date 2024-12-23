@@ -42,8 +42,8 @@ class DatabaseClusterSpecProxyResources implements ModelInterface, \ArrayAccess,
       * @var array<string, string>
       */
     protected static array $openAPITypes = [
-        'cpu' => '\Everest\Model\DatabaseClusterSpecEngineResourcesCpu',
-        'memory' => '\Everest\Model\DatabaseClusterSpecEngineResourcesMemory',
+        'cpu' => 'string',
+        'memory' => 'string',
     ];
 
     /**
@@ -255,6 +255,14 @@ class DatabaseClusterSpecProxyResources implements ModelInterface, \ArrayAccess,
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['cpu']) && !preg_match("/^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/", $this->container['cpu'])) {
+            $invalidProperties[] = "invalid value for 'cpu', must be conform to the pattern /^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/.";
+        }
+
+        if (!is_null($this->container['memory']) && !preg_match("/^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/", $this->container['memory'])) {
+            $invalidProperties[] = "invalid value for 'memory', must be conform to the pattern /^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/.";
+        }
+
         return $invalidProperties;
     }
 
@@ -273,7 +281,7 @@ class DatabaseClusterSpecProxyResources implements ModelInterface, \ArrayAccess,
     /**
      * Gets cpu
      *
-     * @return null|\Everest\Model\DatabaseClusterSpecEngineResourcesCpu
+     * @return null|string
      */
     public function getCpu(): mixed
     {
@@ -283,12 +291,15 @@ class DatabaseClusterSpecProxyResources implements ModelInterface, \ArrayAccess,
     /**
      * Sets cpu
      *
-     * @param null|\Everest\Model\DatabaseClusterSpecEngineResourcesCpu $cpu cpu
+     * @param null|string $cpu CPU is the CPU resource requirements
      */
     public function setCpu(mixed $cpu): static
     {
         if (is_null($cpu)) {
             throw new \InvalidArgumentException('non-nullable cpu cannot be null');
+        }
+        if (is_string($cpu) && (!preg_match("/^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/", $cpu))) {
+            throw new \InvalidArgumentException("invalid value for \$cpu when calling DatabaseClusterSpecProxyResources., must conform to the pattern /^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/.");
         }
         $this->container['cpu'] = $cpu;
 
@@ -298,7 +309,7 @@ class DatabaseClusterSpecProxyResources implements ModelInterface, \ArrayAccess,
     /**
      * Gets memory
      *
-     * @return null|\Everest\Model\DatabaseClusterSpecEngineResourcesMemory
+     * @return null|string
      */
     public function getMemory(): mixed
     {
@@ -308,12 +319,15 @@ class DatabaseClusterSpecProxyResources implements ModelInterface, \ArrayAccess,
     /**
      * Sets memory
      *
-     * @param null|\Everest\Model\DatabaseClusterSpecEngineResourcesMemory $memory memory
+     * @param null|string $memory Memory is the memory resource requirements
      */
     public function setMemory(mixed $memory): static
     {
         if (is_null($memory)) {
             throw new \InvalidArgumentException('non-nullable memory cannot be null');
+        }
+        if (is_string($memory) && (!preg_match("/^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/", $memory))) {
+            throw new \InvalidArgumentException("invalid value for \$memory when calling DatabaseClusterSpecProxyResources., must conform to the pattern /^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$/.");
         }
         $this->container['memory'] = $memory;
 
